@@ -1,6 +1,34 @@
 import Link from "next/link"
+import axios from "axios";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const router = useRouter();
+
+    const handlelogin = async () => {
+        const data = {
+            email,
+            password,
+        }
+        console.log('Sending data:', data);
+        try {
+            const response = await axios.post("http://localhost:8000/api/login", data);
+            console.log(response.body);
+                // Redirect the user to a different page after successful registration
+                toast.success('Login Berhasil!');
+                router.push('/');
+                localStorage.setItem('access_token', `Bearer ${response.data.token}`);
+                console.log(response.data.token)
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+        
+    }
     return (
         <>  
             <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')</style>
@@ -23,7 +51,7 @@ export default function Login() {
                                         <label className="text-xs text-neutral-25 font-semibold px-1">Email</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                            <input id="email" type="email" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com"/>
+                                            <input id="email" type="email" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="johnsmith@example.com"value={email} onChange={(e) => setEmail(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -32,7 +60,7 @@ export default function Login() {
                                         <label className="text-xs text-neutral-25 font-semibold px-1">Password</label>
                                         <div className="flex">
                                             <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                            <input id="password" type="password" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************"/>
+                                            <input id="password" type="password" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="************"value={password} onChange={(e) => setPassword(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -52,9 +80,9 @@ export default function Login() {
                             </div>
                             <div className="flex -mx-3 pt-8">
                                 <div className="w-full px-3 mb-12">
-                                    <button className="flex flex-row justify-between block w-full py-2 bg-primary-400 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                                    <button className="flex flex-row justify-between block w-full py-2 bg-primary-400 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"onClick={handlelogin}>
                                         MASUK
-                                        <img className="pt-1" src='/arrow.svg'/>
+                                        <img className="pt-1" src='/arrow.svg' />
                                     </button>
                                         
                                 </div>
