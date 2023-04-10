@@ -10,6 +10,7 @@ export default function User_Dashboard_Home() {
             </aside>
             <div className="p-8 flex-col space-y-6 w-full">
                 <h1 className="text-3xl font-semibold">Selamat Datang, User</h1>
+                {/* Notification */}
                 <div className="flex flex-row space-x-4 mx-auto p-5 items-center bg-danger-100 rounded-xl">
                     <img src="../icon/warning.svg" alt="" className="self-start" />
                     <div className="flex flex-col space-y-4">
@@ -20,6 +21,7 @@ export default function User_Dashboard_Home() {
                         <button className="bg-danger-500 hover:bg-danger-600 w-36 rounded-lg px-8 py-1 text-white">Lengkapi</button>
                     </div>
                 </div>
+                {/* Judul */}
                 <h2 className="text-2xl font-semibold">Seminar Yang Diikuti</h2>    
                 <div className="flex flex-col gap-y-4 md:flex-row lg:flex-row md:space-x-4 lg:space-x-4">  
                     {/* Card */}
