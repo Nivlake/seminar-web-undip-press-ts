@@ -3,7 +3,7 @@ import { useState } from "react"
 export default function Sidebar_2() {
   const [showSidebar, setShowSidebar] = useState(false)
   return (
-    <div className={`sidebar bg-primary-500 border-r 
+    <div className={`sidebar bg-primary-500 border-r overflow-hidden
                    ${showSidebar ? "w-96 bg-primary-500 shadow-lg ease-in-out duration-300 " : "w-[7.5rem] ease-in-out duration-300"}`}>  
         <div className="flex h-screen flex-col justify-between pt-2 pb-6">
             <div>
@@ -44,7 +44,7 @@ export default function Sidebar_2() {
                     </li>
                 </ul>
             </div>
-            <div className="flex flex-col w-max -mb-3">
+            <div className="flex flex-col w-max mx-auto -mb-3">
                 <a href="#" className="group flex items-center space-x-4 px-9 py-2 text-gray-600">
                     <img src="../icon/logout.svg" className="w-10 h-10 p-1"/>
                     <div className={`${showSidebar ? "" : "hidden"}`}>
