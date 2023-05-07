@@ -1,42 +1,11 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
-import {useState} from 'react';
+import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
+import Link from "next/link";
 
 
 export default function upcoming(){
-    const [showModal, setShowModal] = useState(false);
-    const Delete = () =>{
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
-            }
-          })
-    }
-    const Save = () =>{
-        Swal.fire({
-            title: 'Do you want to save the changes?',
-            showCancelButton: true,
-            confirmButtonText: 'Save',
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              Swal.fire('Saved!', '', 'success')
-            }
-          })
-    }
     return(
         <>
             <div className="flex">
@@ -69,9 +38,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -79,9 +50,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -89,9 +62,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -99,9 +74,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -109,9 +86,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -119,9 +98,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -129,9 +110,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -139,9 +122,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -149,9 +134,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -159,78 +146,13 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">100 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/upcoming/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div> 
-                                {/* Modal */}
-                                {showModal ? (
-                                <div className="fixed z-10 inset-0">
-                                    <div className="flex items-center justify-center min-h-screen">
-                                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
-                                    <div className="relative bg-white rounded-lg p-6 gap-6 overflow-y-scroll max-h-[80vh]">
-                                        <button
-                                        className="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-600"
-                                        onClick={() => setShowModal(false)}
-                                        >
-                                        <svg
-                                            className="h-6 w-6 fill-current"
-                                            viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <title>Close</title>
-                                            <path
-                                            d="M14.348 14.849a1 1 0 01-1.414 0l-3.536-3.535-3.536 3.535a1 1 0 01-1.414 0 1 1 0 010-1.414l3.535-3.536-3.535-3.536a1 1 0 010-1.414 1 1 0 011.414 0l3.536 3.535 3.536-3.535a1 1 0 011.414 0 1 1 0 010 1.414l-3.535 3.536 3.535 3.536a1 1 0 010 1.414z"
-                                            ></path>
-                                        </svg>
-                                        </button>
-                                        <h2 className="text-2xl font-bold mb-4">Modal Title</h2>
-                                        {/* content */}
-                                        <form action="" className="flex flex-col px-2.5 gap-5">
-                                        <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">
-                                            <h3 className="text-white">Insert Image Here</h3>
-                                        </div>
-                                        <div className="flex w-[44.188rem] h-[12.438rem] bg-neutral-500 justify-center items-center">
-                                            <h3 className="text-white">Insert Image Here</h3>
-                                        </div>
-                                        <div className="flex flex-col gap-4">
-                                            <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Nama Seminar</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
-                                        </div>
-                                        <div className="flex h-[10.25rem] gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Deskripsi</h3>
-                                            <textarea className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
-                                        </div>
-                                        <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Nama Pembicara</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
-                                        </div>
-                                        <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Kategori</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
-                                        </div>
-                                        <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Tanggal Penyelenggaraan</h3>
-                                            <input type="date" className="w-[11.75rem] h-full border border-neutral-300 rounded-md" />
-                                        </div>
-                                        </div>
-                                        </form>
-                                        <div className="flex flex-row gap-2.5 mt-5">
-                                            <button className="flex flex-row bg-success-600 py-2.5 px-7 rounded-lg"
-                                            onClick={Save}>
-                                            <h3>Save</h3>
-                                            </button>
-                                            <button className="flex flex-row bg-danger-600 py-2.5 px-5 rounded-lg"
-                                            onClick={() => setShowModal(false)}>
-                                            <h3>Cancel</h3>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                ) : null}
                             </div>
                             {/* Page */}
                             <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">

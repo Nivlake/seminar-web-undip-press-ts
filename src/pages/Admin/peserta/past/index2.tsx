@@ -1,4 +1,5 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
+import Link from "next/link";
 import React from "react";
 import {useState} from 'react';
 import Swal from 'sweetalert2';
@@ -69,9 +70,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -79,9 +82,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -89,9 +94,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -99,9 +106,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -109,9 +118,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -119,9 +130,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -129,9 +142,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -139,9 +154,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -149,9 +166,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>  
                                 <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
@@ -159,9 +178,11 @@ export default function upcoming(){
                                     <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
                                     <h3 className="w-[13.438rem] h-fit break-words">70 Orang</h3>
                                     <div className="flex flex-row gap-[1.875rem] align-top">
+                                        <Link href="/Admin/peserta/past/detail">
                                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div> 
                                 {/* Modal */}

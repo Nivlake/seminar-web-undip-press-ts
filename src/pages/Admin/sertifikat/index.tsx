@@ -59,132 +59,32 @@ export default function upcoming(){
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem]">Judul</h3>
-                                    <h3 className="w-[13.438rem]">Kode Seminar</h3>
-                                    <h3 className="w-[13.438rem]">Sertifikat</h3>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                    <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-10 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <div className="w-[13.438rem] h-fit">
-                                        <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
-                                            <h3 className="text-white">View</h3> 
-                                            <img src="/icon/eye.svg" alt="" /> 
-                                        </button>
-                                    </div>                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    </div>
-                                </div> 
+                                <table className="table-auto w-full">
+                                    <thead className="bg-gray-700 text-white">
+                                        <tr>
+                                            <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
+                                            <th className="px-6 py-3 text-left uppercase tracking-wider">Kode Seminar</th>
+                                            <th className="px-6 py-3 text-left uppercase tracking-wider">Sertifikat</th>
+                                            <th className="px-6 py-3 text-left uppercase tracking-wider">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Seminar A</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ABC123</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button className="flex flex-row justify-center items-center gap-2.5 rounded-[0.625rem] w-[6.25rem] h-[2.125rem] px-4 py-2.5 bg-info-700"> 
+                                                <h3 className="text-white">View</h3> 
+                                                <img src="/icon/eye.svg" alt="" /> 
+                                            </button>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                {/* <button className="text-indigo-600 hover:text-indigo-900 mr-4">View</button> */}
+                                                <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 {/* Modal */}
                                 {showModal ? (
                                 <div className="fixed z-10 inset-0">
