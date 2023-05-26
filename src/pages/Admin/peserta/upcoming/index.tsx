@@ -29,7 +29,7 @@ export default function upcoming(){
                             </div>
                             <div className="flex flex-col gap-2.5">
                                 <table className="table-auto w-full">
-                                <thead className="bg-gray-700 text-white">
+                                    <thead className="bg-gray-700 text-white">
                                     <tr>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider">Tanggal Penyelenggaraan</th>
