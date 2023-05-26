@@ -1,6 +1,25 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 
 export default function tiket(){
+    const Delete = () =>{
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+          })
+    }
     return(
         <>
             <div className="flex">
@@ -23,112 +42,31 @@ export default function tiket(){
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem]">Judul</h3>
-                                    <h3 className="w-[13.438rem]">Lokasi</h3>
-                                    <h3 className="w-[13.438rem]">Harga Tiket</h3>
-                                    <h3 className="w-[13.438rem]">Jumlah Tiket</h3>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Online / Offline</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Rp 50.000</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">100 Tiket</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                        <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" />
-                                    </div>
-                                </div>                                 
+                                <table className="table-auto w-full">
+                                    <thead className="bg-gray-700 text-white">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Lokasi</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Harga Tiket</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Jumlah Tiket</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">asdaasdasddasdasdasdasdasdasdasdasdasd</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Online / Offline</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp 50.000</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100 Tiket</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div className="flex gap-7">
+                                                <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
+                                                <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>                              
                             </div>
                             {/* Page */}
                             <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">

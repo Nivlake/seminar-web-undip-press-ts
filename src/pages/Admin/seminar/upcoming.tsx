@@ -2,6 +2,7 @@ import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
 import {useState} from 'react';
 import Swal from 'sweetalert2';
+import Link from "next/link";
 
 
 export default function upcoming(){
@@ -59,112 +60,31 @@ export default function upcoming(){
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem]">Judul</h3>
-                                    <h3 className="w-[13.438rem]">Pembicara</h3>
-                                    <h3 className="w-[13.438rem]">Kategori</h3>
-                                    <h3 className="w-[13.438rem]">Tanggal Penyelenggaraan</h3>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                    <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                    <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div>  
-                                <div className="flex flex-row font-bold text-base gap-2.5 border-b-2 border-black pb-2.5">
-                                    <h3 className="w-[13.438rem] h-fit break-words">asdaasdasddasdasdasdasdasdasdasdasdasd</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Pembicara 1, Pembicara 2, Pembicara 3</h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">Kategori 1, Kategori 2, Kategori 3 </h3>
-                                    <h3 className="w-[13.438rem] h-fit break-words">03 Februari 2023</h3>
-                                    <div className="flex flex-row gap-[1.875rem] align-top">
-                                        <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                        <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
-                                    </div>
-                                </div> 
+                                <table className="table-auto w-full">
+                                    <thead className="bg-gray-700 text-white">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Pembicara</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Kategori</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">asdaasdasddasdasdasdasdasdasdasdasdasd</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pembicara 1, Pembicara 2, Pembicara 3</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100 Orang</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03 Februari 2023</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div className="flex gap-7">
+                                                <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
+                                                <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>                
                                 {/* Modal */}
                                 {showModal ? (
                                 <div className="fixed z-10 inset-0">
