@@ -38,27 +38,36 @@ export default function Admin(){
                     <div className="flex flex-col gap-2.5">
                         <div className="container mt-6 flex flex-row gap-5 mx-auto">  
                             {/* Card */}
-                            <Link href="/Admin/seminar" className="flex flex-col items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
-                                <div className="flex flex-row items-center justify-between py-7 px-[4.188rem] leading-normal">
+                            <Link href="/Admin/seminar" className="flex flex-col w-[28.563rem] items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
+                                <div className="flex flex-row items-center justify-between py-[1.688rem] px-[3.75rem] leading-normal">
                                     <img src="/icon/seminar.svg" alt="" />
                                     <h5 className="ml-3 text-2xl font-bold tracking-tight text-black">Manajemen Seminar</h5>
                                 </div>
                             </Link>
                             {/* Card */}
-                            <Link href="/Admin/sertifikat" className="flex flex-col items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
-                                <div className="flex flex-row items-center justify-between py-7 px-[4.188rem] leading-normal">
-                                    <img src="/icon/sertifikat.svg" alt="" />
-                                    <h5 className="ml-3 text-2xl font-bold tracking-tight text-black">Manajemen Sertifikat</h5>
+                            <Link href="/Admin/peserta" className="flex flex-col w-[28.563rem] items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
+                                <div className="flex flex-row items-center justify-between py-[1.688rem] px-[3.75rem] leading-normal">
+                                    <img src="/icon/user_admin2.svg" alt="" />
+                                    <h5 className="ml-3 text-2xl font-bold tracking-tight text-black">Manajemen Peserta</h5>
                                 </div>
                             </Link>
                         </div>
                         <div className="container flex flex-row gap-5 mx-auto">
-                            <Link href="/Admin/laporan" className="flex flex-col items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
-                                <div className="flex flex-row items-center justify-between py-7 px-[4.188rem] leading-normal">
+                            {/* Card */}
+                            <Link href="/Admin/sertifikat" className="flex flex-col w-[28.563rem] items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
+                                <div className="flex flex-row items-center justify-between py-[1.688rem] px-[3.75rem] leading-normal">
+                                    <img src="/icon/sertifikat.svg" alt="" />
+                                    <h5 className="ml-3 text-2xl font-bold tracking-tight text-black">Manajemen Sertifikat</h5>
+                                </div>
+                            </Link>
+                            {/* Card */}
+                            <Link href="/Admin/laporan" className="flex flex-col w-[28.563rem] items-center bg-primary-300 border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-primary-400">
+                                <div className="flex flex-row items-center justify-between py-[1.688rem] px-[3.75rem] leading-normal">
                                     <img src="/icon/laporan.svg" alt="" />
                                     <h5 className="ml-3 text-2xl font-bold tracking-tight text-black">Laporan dan Analitik</h5>
                                 </div>
                             </Link>
+                            
                         </div>
                     </div>
                 </div>
