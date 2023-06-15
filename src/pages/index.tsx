@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
-    axios.get('http://127.0.0.1:8000/api/user', { headers: { Authorization: `${token}`, } })
+    axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/user', { headers: { Authorization: `${token}`, } })
       .then(response => {
         setUser(response.data);
         console.log(response);
