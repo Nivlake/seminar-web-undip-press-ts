@@ -72,32 +72,60 @@ export default function upcoming(){
                                 </thead>
                                 <tbody className="bg-gray-700 text-white">
                                     <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        1
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        John Doe
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        1234567890
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        john.doe@example.com
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        {kodeUnik && <span>{kodeUnik}</span>}
-                                        <button onClick={generateKodeUnik} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        Generate
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        {barcode && (
-                                            <img src={barcode} alt="QR code" className="mx-auto" />
-                                        )}
-                                        <button onClick={generateBarcode} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            1
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            John Doe
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            1234567890
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            john.doe@example.com
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {kodeUnik && <span>{kodeUnik}</span>}
+                                            <button onClick={generateKodeUnik} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             Generate
-                                        </button>
-                                    </td>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {barcode && (
+                                                <img src={barcode} alt="QR code" className="mx-auto" />
+                                            )}
+                                            <button onClick={generateBarcode} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                Generate
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            1
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            John Doe
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            1234567890
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            john.doe@example.com
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {kodeUnik && <span>{kodeUnik}</span>}
+                                            <button onClick={generateKodeUnik} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                            Generate
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {barcode && (
+                                                <img src={barcode} alt="QR code" className="mx-auto" />
+                                            )}
+                                            <button onClick={generateBarcode} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                Generate
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
