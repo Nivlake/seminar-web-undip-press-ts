@@ -17,7 +17,7 @@ export default function Login() {
         }
         console.log('Sending data:', data);
         try {
-            const response = await axios.post("http://localhost:8000/api/login", data);
+            const response = await axios.post("https://walrus-app-elpr8.ondigitalocean.app/api/login", data);
             console.log(response.body);
                 // Redirect the user to a different page after successful registration
                 toast.success('Login Berhasil!');
