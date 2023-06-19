@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Sidebar_2 from 'components/Sidebar_2'
+import Seminar from 'components/Seminar'
 
 export default function User_Dashboard_Home() {
   return (
@@ -10,6 +11,7 @@ export default function User_Dashboard_Home() {
             </aside>
             <div className="p-8 flex-col space-y-6 w-full">
                 <h1 className="text-3xl font-semibold">Selamat Datang, User</h1>
+                {/* Notification */}
                 <div className="flex flex-row space-x-4 mx-auto p-5 items-center bg-danger-100 rounded-xl">
                     <img src="../icon/warning.svg" alt="" className="self-start" />
                     <div className="flex flex-col space-y-4">
@@ -20,65 +22,15 @@ export default function User_Dashboard_Home() {
                         <button className="bg-danger-500 hover:bg-danger-600 w-36 rounded-lg px-8 py-1 text-white">Lengkapi</button>
                     </div>
                 </div>
+                {/* Judul */}
                 <h2 className="text-2xl font-semibold">Seminar Yang Diikuti</h2>    
                 <div className="flex flex-col gap-y-4 md:flex-row lg:flex-row md:space-x-4 lg:space-x-4">  
                     {/* Card */}
-                    <div className="max-w-xs rounded-xl overflow-hidden shadow-lg">
-                        <img src="/homecard.svg" alt="Placeholder" className="w-full" />
-                        <div className="p-5 space-y-4">
-                        <div className="flex flex-row space-x-2">
-                                <img src="../icon/narasumber.svg"/>
-                                <div className="text-neutral-900 flex flex-row">
-                                    <p>Narasumber 1</p>
-                                    <p>Narasumber 2</p>
-                                </div>  
-                            </div>
-                            <div className="font-bold text-xl mb-2">
-                                The Future of Artificial Intelligence
-                            </div>
-                            <p className="text-gray-700 line-clamp-3">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet semper ipsum semper ipsum semper ipsum semper ipsum semper ipsum semper ipsum.
-                            </p>
-                        </div>
-                    </div>
+                    <Seminar/>
                     {/* Card */}
-                    <div className="max-w-xs rounded-xl overflow-hidden shadow-lg">
-                        <img src="/homecard.svg" alt="Placeholder" className="w-full" />
-                        <div className="p-5 space-y-4">
-                        <div className="flex flex-row space-x-2">
-                                <img src="../icon/narasumber.svg"/>
-                                <div className="text-neutral-900 flex flex-row">
-                                    <p>Narasumber 1</p>
-                                    <p>Narasumber 2</p>
-                                </div>  
-                            </div>
-                            <div className="font-bold text-xl mb-2">
-                                The Future of Artificial Intelligence
-                            </div>
-                            <p className="text-gray-700 line-clamp-3">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet semper ipsum semper ipsum semper ipsum semper ipsum semper ipsum semper ipsum.
-                            </p>
-                        </div>
-                    </div>
+                    <Seminar/>
                     {/* Card */}
-                    <div className="max-w-xs rounded-xl overflow-hidden shadow-lg">
-                        <img src="/homecard.svg" alt="Placeholder" className="w-full" />
-                        <div className="p-5 space-y-4">
-                        <div className="flex flex-row space-x-2">
-                                <img src="../icon/narasumber.svg"/>
-                                <div className="text-neutral-900 flex flex-row">
-                                    <p>Narasumber 1</p>
-                                    <p>Narasumber 2</p>
-                                </div>  
-                            </div>
-                            <div className="font-bold text-xl mb-2">
-                                The Future of Artificial Intelligence
-                            </div>
-                            <p className="text-gray-700 line-clamp-3">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet semper ipsum semper ipsum semper ipsum semper ipsum semper ipsum semper ipsum.
-                            </p>
-                        </div>
-                    </div>
+                    <Seminar/>
                 </div>
             </div>
         </div>

@@ -37,7 +37,7 @@ module.exports = {
           800: "#281289",
           900: "#1A0B71",
       },
-        succes: {
+        success: {
           25:"#FAFCF7",
           50:"#F8FCEF",
           100: "#F4FCCD",
@@ -92,6 +92,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/line-clamp'),
+    // require('@tailwindcss/line-clamp'),
   ],
 }
