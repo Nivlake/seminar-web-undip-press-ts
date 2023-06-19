@@ -22,12 +22,14 @@ export default function Sidebar_2() {
                         <a href="#" aria-label="dashboard" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
                             <img src='../icon/home.svg'/>
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700 duration-300`}>Home</span>
+                            <link href="/home" rel="canonical" />
                         </a>
                     </li>
                     <li className="min-w-max">
                         <a href="#" className="bg group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
                             <img src='../icon/template.svg'/>
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700 duration-300`}>List Seminar</span>
+                            <link href="/list_seminar" rel="canonical" />
                         </a>
                     </li>
                     <li className="min-w-max">
