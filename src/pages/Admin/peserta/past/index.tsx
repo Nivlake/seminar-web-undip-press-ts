@@ -1,12 +1,37 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
-import Link from "next/link";
 import React from "react";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import axios from "axios";
+import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
+import Link from "next/link";
 
 
 export default function upcoming(){
     const [showModal, setShowModal] = useState(false);
+    const [seminarData, setSeminarData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/past');
+            if (response) {
+              setSeminarData(response.data); // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarData !== null) {
+          console.log(seminarData);
+          // Perform any other operations that depend on seminarData
+        }
+      }, [seminarData]);
     const Delete = () =>{
         Swal.fire({
             title: 'Are you sure?',
@@ -45,7 +70,7 @@ export default function upcoming(){
                     <Admin_Sidebar/>
                 </aside>
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
-                    <h1 className="text-3xl font-semibold px-2.5">Upcoming Seminar</h1>
+                    <h1 className="text-3xl font-semibold px-2.5">Past Seminar</h1>
                     <div className="p-2.5">
                         <div className="container flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
@@ -70,18 +95,20 @@ export default function upcoming(){
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        <tr>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Seminar A</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03 Februari 2023</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">70 Orang</td>
+                                    {seminarData && seminarData.map((seminar) => (
+                                        <tr key={seminar.id}>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seminar.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.date_and_time}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.participant_count}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <Link href="/Admin/peserta/past/detail">
+                                            <Link href={`/Admin/peserta/past/detail/${seminar.id}`}>
                                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                     Details
                                                 </button>
                                             </Link>
                                             </td>
                                         </tr>
+                                    ))}
                                     </tbody>
                                 </table>
                                 {/* Modal */}

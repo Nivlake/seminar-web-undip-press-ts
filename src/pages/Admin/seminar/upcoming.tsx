@@ -1,12 +1,37 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import axios from "axios";
 import Swal from 'sweetalert2';
 import Link from "next/link";
 
 
 export default function upcoming(){
+    const [seminarData, setSeminarData] = useState(null);
     const [showModal, setShowModal] = useState(false);
+  
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming');
+            if (response) {
+              setSeminarData(response.data); // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarData !== null) {
+          console.log(seminarData);
+          // Perform any other operations that depend on seminarData
+        }
+      }, [seminarData]);
+      
     const Delete = () =>{
         Swal.fire({
             title: 'Are you sure?',
@@ -71,18 +96,24 @@ export default function upcoming(){
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        <tr>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">asdaasdasddasdasdasdasdasdasdasdasdasd</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pembicara 1, Pembicara 2, Pembicara 3</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">100 Orang</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">03 Februari 2023</td>
+                                    {seminarData && seminarData.map((seminar) => (
+                                        <tr key={seminar.id}>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seminar.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.speaker}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.short_description}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.date_and_time}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div className="flex gap-7">
-                                                <button><img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={()=> setShowModal(true)}/></button>
-                                                <button><img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete}/></button>
+                                                <button>
+                                                <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={() => setShowModal(true)} />
+                                                </button>
+                                                <button>
+                                                <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete} />
+                                                </button>
                                             </div>
                                             </td>
                                         </tr>
+                                    ))}
                                     </tbody>
                                 </table>                
                                 {/* Modal */}
