@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useState } from "react"
 
 export default function Sidebar_2() {
@@ -19,30 +20,28 @@ export default function Sidebar_2() {
                 </div>
                 <ul className="mt-6 space-y-2 tracking-wide px-8">
                     <li className="min-w-max">
-                        <a href="#" aria-label="dashboard" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
+                        <Link href="/User" aria-label="dashboard" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
                             <img src='../icon/home.svg'/>
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700 duration-300`}>Home</span>
-                            <link href="/home" rel="canonical" />
-                        </a>
+                        </Link>
                     </li>
                     <li className="min-w-max">
-                        <a href="#" className="bg group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
+                        <Link href="/User/list_seminar" className="bg group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
                             <img src='../icon/template.svg'/>
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700 duration-300`}>List Seminar</span>
-                            <link href="/list_seminar" rel="canonical" />
-                        </a>
+                        </Link>
                     </li>
                     <li className="min-w-max">
-                        <a href="#" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
+                        <Link href="/User/list_sertifikat" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
                             <img src='../icon/certificate.svg'/>
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700 duration-300`}>List Sertifikat</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="min-w-max">
-                        <a href="#" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
+                        <Link href="/User/pembaruan_berkas" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400 duration-300">
                             <img src='../icon/berkas.svg'/>
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700 duration-300`}>Pembaruan Berkas</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -54,13 +53,13 @@ export default function Sidebar_2() {
                     </div>
                 </a>
                 <div className="my-4 bg-white h-[1px] w-96"></div>
-                <a href="#" className="group flex items-center space-x-4 rounded-md px-9 py-2 text-gray-600">
+                <Link href="/User/user_profile" className="group flex items-center space-x-4 rounded-md px-9 py-2 text-gray-600">
                     <img src="../face.png" className="w-10 h-10 rounded-full"/>
                     <div className={`${showSidebar ? "" : "hidden"} flex flex-col`}>
                         <span className="text-white font-bold">User</span>
                         <span className="text-white">user@gmail.com</span>
                     </div>
-                </a>
+                </Link>
             </div>
         </div>
     </div>
