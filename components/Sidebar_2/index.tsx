@@ -1,7 +1,32 @@
-import { useState } from "react"
+import Link from "next/link"
+import axios from "axios";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Sidebar_2() {
-  const [showSidebar, setShowSidebar] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false);
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const handleLogout = () => {
+    const token = localStorage.getItem('access_token');
+    axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/logout', {}, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then(response => {
+      localStorage.removeItem('access_token');
+      setUser(null);
+      toast.success('Successfully logged out!');
+      router.push('/');
+    })
+    .catch(error => {
+      console.log(error);
+      toast.error('Error logging out!');
+    });
+  };
   return (
     <div className={`sidebar bg-primary-500 border-r overflow-hidden
                    ${showSidebar ? "w-96 bg-primary-500 shadow-lg ease-in-out duration-300 " : "w-[7.5rem] ease-in-out duration-300"}`}>  
@@ -47,12 +72,12 @@ export default function Sidebar_2() {
                 </ul>
             </div>
             <div className="flex flex-col w-max mx-auto -mb-3">
-                <a href="#" className="group flex items-center space-x-4 px-9 py-2 text-gray-600">
-                    <img src="../icon/logout.svg" className="w-10 h-10 p-1"/>
+                <button onClick={handleLogout} className="group flex items-center space-x-4 px-9 py-2 text-gray-600">
+                    <img src="../icon/logout.svg" className="w-10 h-10 p-1" />
                     <div className={`${showSidebar ? "" : "hidden"}`}>
                         <span className="text-white font-bold">Keluar</span>
                     </div>
-                </a>
+                </button>
                 <div className="my-4 bg-white h-[1px] w-96"></div>
                 <a href="#" className="group flex items-center space-x-4 rounded-md px-9 py-2 text-gray-600">
                     <img src="../face.png" className="w-10 h-10 rounded-full"/>

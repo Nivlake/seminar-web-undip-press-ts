@@ -1,6 +1,6 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import {useState} from 'react';
 import Swal from 'sweetalert2';
 import Link from "next/link";
@@ -13,6 +13,8 @@ export default function upcoming(){
         updatedAttendance[index] = !updatedAttendance[index];
         setAttendance(updatedAttendance);
     };
+    const router = useRouter();
+    const { seminarId } = router.query;
     return(
         <>
             <div className="flex">

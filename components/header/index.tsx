@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Header() {
   const [user, setUser] = useState(null);
-
+  const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/user', { headers: { Authorization: `${token}`, } })
@@ -22,23 +22,13 @@ export default function Header() {
       });
   }, []);
   
-  const handleLogout = () => {
-    const token = localStorage.getItem('access_token');
-    axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/logout', {}, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    })
-    .then(response => {
-      localStorage.removeItem('access_token');
-      setUser(null);
-      toast.success('Successfully logged out!');
-      router.push('/');
-    })
-    .catch(error => {
-      console.log(error);
-      toast.error('Error logging out!');
-    });
+  const handleDashboardClick = () => {
+    // Check the user's role and navigate to the appropriate dashboard
+    if (user && user.role === 'admin') {
+      router.push('/Admin');
+    } else {
+      router.push('/User');
+    }
   };
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -52,8 +42,9 @@ export default function Header() {
               <Link href="/about" className="px-5 py-3 text-white ">All Seminar</Link>
               <Link href="/contact" className="px-5 py-3 text-white ">Contact</Link>
               {user ? (
-              <button className='px-5 py-3 text-white rounded-lg bg-primary-300 hover:bg-primary-600 focus:bg-primary-600'onClick={handleLogout}>Logout</button>
-            ) : (
+                <button className='px-5 py-3 text-white rounded-lg bg-primary-300 hover:bg-primary-600 focus:bg-primary-600' onClick={handleDashboardClick}>
+                  {user.role === 'admin' ? 'Admin Dashboard' : 'User Dashboard'}
+                </button>) : (
               <Link href='/Login'><button className='px-5 py-3 text-white rounded-lg bg-primary-300 hover:bg-primary-600 focus:bg-primary-600'>Sign In</button></Link>
             )}
             </div>
