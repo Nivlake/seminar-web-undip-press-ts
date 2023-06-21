@@ -1,12 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar_2 from 'components/Sidebar_2'
 import Seminar from 'components/Seminar'
+import axios from 'axios';
 
 export default function list_seminar() {
+    const [seminarData, setSeminarData] = useState(null);
     const selectStyle: React.CSSProperties = {
         WebkitAppearance: 'none',
         MozAppearance: 'none',
       };
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming");
+            if (response) {
+              setSeminarData(response.data); // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarData !== null) {
+          console.log(seminarData);
+          // Perform any other operations that depend on seminarData
+        }
+      }, [seminarData]);
     return (
         <>
             <div className="flex">
@@ -62,17 +86,17 @@ export default function list_seminar() {
                 </div>
 
                 
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                {seminarData && seminarData.map((seminar) => (
+                    <Seminar
+                        key={seminar.id}
+                        name={seminar.name}
+                        short_description={seminar.short_description}
+                        speaker={seminar.speaker}
+                        date_and_time={seminar.date_and_time}
+                    />
+                ))}
+
                     </div>
                 </div>
             </div>
