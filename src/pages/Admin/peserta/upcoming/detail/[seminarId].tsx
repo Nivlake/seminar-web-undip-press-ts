@@ -1,21 +1,28 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
-import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import {useEffect,useState} from 'react';
 import axios from "axios";
-import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import Link from "next/link";
 
 
 export default function upcoming(){
-    const [seminarData, setSeminarData] = useState(null);
-
+    const [attendance, setAttendance] = useState([true, false, true]); // Dummy attendance data
+    const handleToggleAttendance = (index) => {
+        const updatedAttendance = [...attendance];
+        updatedAttendance[index] = !updatedAttendance[index];
+        setAttendance(updatedAttendance);
+    };
+    const router = useRouter();
+    const { seminarId } = router.query;
+    const [participantData, setParticipantData] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming');
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/{idseminar}/check');
             if (response) {
-              setSeminarData(response.data); // Assuming the actual data is stored in response.data
+              setParticipantData(response.data); // Assuming the actual data is stored in response.data
             }
           } catch (error) {
             console.log(error);
@@ -26,11 +33,11 @@ export default function upcoming(){
       }, []);
       
       useEffect(() => {
-        if (seminarData !== null) {
-          console.log(seminarData);
-          // Perform any other operations that depend on seminarData
+        if (participantData !== null) {
+          console.log(participantData);
+          // Perform any other operations that depend on participantData
         }
-      }, [seminarData]);
+      }, [participantData]);
     return(
         <>
             <div className="flex">
@@ -53,32 +60,51 @@ export default function upcoming(){
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
-                                <table className="table-auto w-full">
-                                    <thead className="bg-gray-700 text-white">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Total Pendaftar</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
-                                    {seminarData && seminarData.map((seminar) => (
-                                        <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seminar.name}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.date_and_time}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.participant_count}</td>
+                            <table className="table-auto w-full">
+                                <thead>
+                                <tr className="bg-gray-700 text-white">
+                                    <th className="px-4 py-2">Nama</th>
+                                    <th className="px-4 py-2">Identitas</th>
+                                    <th className="px-4 py-2">Email</th>
+                                    <th className="px-4 py-2">Kehadiran</th>
+                                </tr>
+                                </thead>
+                                <tbody className="bg-gray-700 text-white">
+                                <tr>
+                                    <td className="border px-4 py-2">John Doe</td>
+                                    <td className="border px-4 py-2">123456</td>
+                                    <td className="border px-4 py-2">johndoe@example.com</td>
+                                    <td className="border px-4 py-2">
+                                    <button
+                                        className={`${
+                                        attendance[0] ? 'bg-green-500' : 'bg-red-500'
+                                        } hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded`}
+                                        onClick={() => handleToggleAttendance(0)}
+                                    >
+                                        {attendance[0] ? 'Hadir' : 'Tidak Hadir'}
+                                    </button>
+                                    </td>
+                                </tr>
+                                {/* {participantData && participantData.map((participant) => (
+                                        <tr key={participant.id}>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participant.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{participant.phone}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{participant.email}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <Link href={`/Admin/peserta/upcoming/detail/${seminar.id}`}>
-                                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                    Details
+                                                <button
+                                                    className={`${
+                                                    attendance[0] ? 'bg-green-500' : 'bg-red-500'
+                                                    } hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded`}
+                                                    onClick={() => handleToggleAttendance(0)}
+                                                >
+                                                    {attendance[0] ? 'Hadir' : 'Tidak Hadir'}
                                                 </button>
-                                            </Link>
                                             </td>
+                                            
                                         </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
+                                    ))} */}
+                                </tbody>
+                            </table>
                             </div>
                             {/* Page */}
                             <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">
