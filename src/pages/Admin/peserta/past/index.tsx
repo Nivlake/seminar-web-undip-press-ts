@@ -24,7 +24,7 @@ export default function upcoming(){
         };
       
         fetchData();
-      }, []);
+    }, []);
       
       useEffect(() => {
         if (seminarData !== null) {

@@ -1,38 +1,41 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
+import QRCode from 'qrcode';
 import {useRouter} from 'next/router';
 import {useEffect,useState} from 'react';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import Link from "next/link";
 
-
 export default function upcoming(){
-    const [attendance, setAttendance] = useState([true, false, true]); // Dummy attendance data
-    const handleToggleAttendance = (index) => {
-        const updatedAttendance = [...attendance];
-        updatedAttendance[index] = !updatedAttendance[index];
-        setAttendance(updatedAttendance);
-    };
-    const router = useRouter();
-    const pathSegments = router.asPath.split('/');
-    const seminar = pathSegments[pathSegments.length - 1];
+    const [kodeUnik, setKodeUnik] = useState('');
+    const [barcode, setBarcode] = useState('');
     const [participantData, setParticipantData] = useState(null);
-    useEffect(() => {
+
+    const generateKodeUnik = () => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < 6; i++) {
+          result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        setKodeUnik(result);
+      };
+
+      const generateBarcode = () => {
+        if (!kodeUnik) {
+          return;
+        }
+      
+        QRCode.toDataURL(kodeUnik)
+          .then(url => setBarcode(url))
+          .catch(err => console.error(err));
+      };
+      useEffect(() => {
         const fetchData = async () => {
           try {
-            const token = localStorage.getItem('access_token');
-            const config = {
-              headers: {
-                // Add your desired headers here
-                'Authorization': `${token}`
-              },
-            };
-      
-            const response = await axios.get(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${seminar}`, config);
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/{idseminar}/check');
             if (response) {
-              setParticipantData(response.data.applicants);
-            //   console.log(response.data.applicants) // Assuming the actual data is stored in response.data
+              setParticipantData(response.data); // Assuming the actual data is stored in response.data
             }
           } catch (error) {
             console.log(error);
@@ -41,7 +44,6 @@ export default function upcoming(){
       
         fetchData();
       }, []);
-      
       
       useEffect(() => {
         if (participantData !== null) {
@@ -56,7 +58,7 @@ export default function upcoming(){
                     <Admin_Sidebar/>
                 </aside>
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
-                    <h1 className="text-3xl font-semibold px-2.5">Upcoming Seminar</h1>
+                    <h1 className="text-3xl font-semibold px-2.5">Past Seminar</h1>
                     <div className="p-2.5">
                         <div className="container flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
@@ -71,27 +73,44 @@ export default function upcoming(){
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
-                            <table className="table-auto w-full">
-                                <thead>
-                                <tr className="bg-gray-700 text-white">
-                                    <th className="px-4 py-2">Nama</th>
-                                    <th className="px-4 py-2">Identitas</th>
-                                    <th className="px-4 py-2">Kehadiran</th>
-                                </tr>
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-700 text-white">
+                                    <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Nama
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Identitas
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Email
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Kode Unik
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Barcode
+                                    </th>
+                                    </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                {participantData && participantData.map((participant) => (
-                                        <tr key={participant.participant_id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{participant.participant_name}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{participant.participant_phone}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
-                                                <button
-                                                    className={`${
-                                                    attendance[0] ? 'bg-green-500' : 'bg-red-500'
-                                                    } hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded`}
-                                                    onClick={() => handleToggleAttendance(0)}
-                                                >
-                                                    {attendance[0] ? 'Hadir' : 'Tidak Hadir'}
+                                <tbody className="bg-gray-700 text-white">
+                                    {participantData && participantData.map((participant) => (
+                                        <tr key={seminar.id}>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participant.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{participant.no_hp}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{participant.email}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                {kodeUnik && <span>{kodeUnik}</span>}
+                                                <button onClick={generateKodeUnik} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                Generate
+                                                </button>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                {barcode && (
+                                                    <img src={barcode} alt="QR code" className="mx-auto" />
+                                                )}
+                                                <button onClick={generateBarcode} className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                    Generate
                                                 </button>
                                             </td>
                                         </tr>

@@ -9,7 +9,17 @@ import Link from "next/link";
 
 export default function upcoming(){
     const [seminarData, setSeminarData] = useState(null);
-
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        
+        const options = {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        };
+        
+        return date.toLocaleDateString('id-ID', options);
+      };
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -56,19 +66,19 @@ export default function upcoming(){
                                 <table className="table-auto w-full">
                                     <thead className="bg-gray-700 text-white">
                                     <tr>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Total Pendaftar</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider"></th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Total Pendaftar</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                     {seminarData && seminarData.map((seminar) => (
                                         <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seminar.name}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.date_and_time}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.participant_count}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.participant_count}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                                             <Link href={`/Admin/peserta/upcoming/detail/${seminar.id}`}>
                                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                     Details

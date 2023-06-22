@@ -1,6 +1,7 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import Link from "next/link";
@@ -9,7 +10,8 @@ import Link from "next/link";
 export default function upcoming(){
     const [seminarData, setSeminarData] = useState(null);
     const [showModal, setShowModal] = useState(false);
-  
+    const router = useRouter();
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -32,25 +34,53 @@ export default function upcoming(){
         }
       }, [seminarData]);
       
-    const Delete = () =>{
+      const Delete = (idseminar) => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const token = localStorage.getItem('access_token');
+            fetch(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${idseminar}`, {
+              method: 'Delete',
+              headers: {
+                'Authorization': `${token}`
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                ).then(() =>{
+                    router.push('/upcoming');
+                });
+              } else {
+                Swal.fire(
+                  'Error',
+                  'Failed to delete the file.',
+                  'error'
+                );
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
               Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
-            }
-          })
-    }
+                'Error',
+                'An error occurred while deleting the file.',
+                'error'
+              );
+            });
+          }
+        });
+      };
+      
     const Save = () =>{
         Swal.fire({
             title: 'Do you want to save the changes?',
@@ -88,32 +118,33 @@ export default function upcoming(){
                                 <table className="table-auto w-full">
                                     <thead className="bg-gray-700 text-white">
                                     <tr>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Pembicara</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Kategori</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider"></th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                     {seminarData && seminarData.map((seminar) => (
-                                        <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seminar.name}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.speaker}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.short_description}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.date_and_time}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <div className="flex gap-7">
-                                                <button>
-                                                <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={() => setShowModal(true)} />
-                                                </button>
-                                                <button>
-                                                <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={Delete} />
-                                                </button>
-                                            </div>
-                                            </td>
-                                        </tr>
+                                      <tr key={seminar.id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.short_description}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.date_and_time}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                          <div className="flex justify-center gap-7">
+                                            <button>
+                                              <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={() => setShowModal(true)} />
+                                            </button>
+                                            <button>
+                                              <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
+                                            </button>
+                                          </div>
+                                        </td>
+                                      </tr>
                                     ))}
+
                                     </tbody>
                                 </table>                
                                 {/* Modal */}
