@@ -86,7 +86,7 @@ export default function detail_seminar() {
                         <p>Selesai : 05 Januari 2023 13.00</p>
                         <h1 className="text-2xl font-bold">Lokasi</h1>
                         <div className="flex flex-row gap-4">
-                            <img src="../icon/location.svg"/>
+                            <img src="../../icon/location.svg"/>
                             <div className="flex flex-col">
                                 <p>UPT Perpustakaan</p>
                                 <p>dan Undip Press, Semarang</p>
