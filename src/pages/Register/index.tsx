@@ -11,7 +11,7 @@ export default function Register() {
     const [name, setName] = useState("");
     const [no_hp, setNo_hp] = useState("");
     const router = useRouter();
-  const handleRegister = async () => {
+    const handleRegister = async () => {
     const data = {
         name: name,
         no_hp: no_hp,
