@@ -1,7 +1,60 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
+import React from "react";
+import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import axios from "axios";
+import Swal from 'sweetalert2';
 import Link from "next/link";
 
 export default function Seminar(){
+    // Upcoming
+    const [seminarDataUpcoming, setseminarDataUpcoming] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming');
+            if (response) {
+              setseminarDataUpcoming(response.data); // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarDataUpcoming !== null) {
+          console.log(seminarDataUpcoming);
+          // Perform any other operations that depend on seminarDataUpcoming
+        }
+      }, [seminarDataUpcoming]);
+
+    // Past
+    const [seminarDataPast, setseminarDataPast] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/past');
+            if (response) {
+              setseminarDataPast(response.data); // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarDataPast !== null) {
+          console.log(seminarDataPast);
+          // Perform any other operations that depend on seminarDataPast
+        }
+      }, [seminarDataPast]);
+
     return(
         <>
             <div className="flex">
@@ -19,66 +72,20 @@ export default function Seminar(){
                                     <Link href="/Admin/peserta/upcoming"><button type="button" className="font-bold text-medium underline underline-offset-1">see all</button></Link>
                                 </div>
                                 {/* Bagian Bawah */}
+                                {seminarDataUpcoming && seminarDataUpcoming.slice(0, 4).map((seminarUpcoming) => (
                                 <div className="flex flex-col border-t-2 border-black">
                                     <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Pendaftar</h2>
-                                            <h3 className="font-medium text-sm text-right">100 Orang</h3>
-                                        </div>
+                                    <div className="flex flex-col">
+                                        <h2 className="font-bold text-base">{seminarUpcoming.name}</h2>
+                                        <h3 className="font-medium text-sm">{seminarUpcoming.speaker}</h3>
+                                    </div>
+                                    <div>
+                                        <h2 className="font-bold text-base">Total Pendaftar</h2>
+                                        <h3 className="font-medium text-sm text-right">{seminarUpcoming.participant_count} Orang</h3>
+                                    </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Pendaftar</h2>
-                                            <h3 className="font-medium text-sm text-right">100 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Pendaftar</h2>
-                                            <h3 className="font-medium text-sm text-right">100 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Pendaftar</h2>
-                                            <h3 className="font-medium text-sm text-right">100 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Pendaftar</h2>
-                                            <h3 className="font-medium text-sm text-right">100 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                             <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-300 rounded-lg justify-between">
                                 <div className="w-full flex justify-between">
@@ -86,66 +93,20 @@ export default function Seminar(){
                                     <Link href="/Admin/peserta/past"><button type="button" className="font-bold text-medium underline underline-offset-1">see all</button></Link>
                                 </div>
                                 {/* Bagian Bawah */}
-                                <div className="flex flex-col border-t-2 border-black">
+                                {seminarDataPast && seminarDataPast.slice(0, 4).map((seminarPast) => (
+                                    <div className="flex flex-col border-t-2 border-black">
                                     <div className="flex justify-between">
                                         <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
+                                            <h2 className="font-bold text-base">{seminarPast.name}</h2>
+                                            <h3 className="font-medium text-sm">{seminarPast.speaker}</h3>
                                         </div>
                                         <div>
                                             <h2 className="font-bold text-base">Total Hadir</h2>
-                                            <h3 className="font-medium text-sm text-right">70 Orang</h3>
+                                            <h3 className="font-medium text-sm text-right">{seminarPast.participant_count} Orang</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Hadir</h2>
-                                            <h3 className="font-medium text-sm text-right">70 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Hadir</h2>
-                                            <h3 className="font-medium text-sm text-right">70 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Hadir</h2>
-                                            <h3 className="font-medium text-sm text-right">70 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col border-t-2 border-black">
-                                    <div className="flex justify-between">
-                                        <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">Judul Seminar</h2>
-                                            <h3 className="font-medium text-sm">Pembicara</h3>
-                                        </div>
-                                        <div>
-                                            <h2 className="font-bold text-base">Total Hadir</h2>
-                                            <h3 className="font-medium text-sm text-right">70 Orang</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         {/* Kanan */}
