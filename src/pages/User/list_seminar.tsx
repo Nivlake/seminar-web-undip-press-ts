@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar_2 from 'components/Sidebar_2'
 import Seminar from 'components/Seminar'
 import axios from 'axios';
+import Link from 'next/link';
 
 export default function list_seminar() {
     const [seminarData, setSeminarData] = useState(null);
@@ -60,9 +61,7 @@ export default function list_seminar() {
                     </div>
 
                 </div>
-                
-                
-
+    
                 {/* Judul */}
                 <div className="flex flex-row justify-between">
                 <h2 className="text-2xl font-semibold">Seminar yang akan datang</h2>  
@@ -84,19 +83,18 @@ export default function list_seminar() {
                         </div>
                     </div>
                 </div>
-
-                
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                {seminarData && seminarData.map((seminar) => (
-                    <Seminar
-                        key={seminar.id}
-                        name={seminar.name}
-                        short_description={seminar.short_description}
-                        speaker={seminar.speaker}
-                        date_and_time={seminar.date_and_time}
-                    />
-                ))}
-
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        {seminarData && seminarData.map((seminar) => (
+                          <Link href={`/User/detail_seminar/${seminar.id}`}>
+                            <Seminar
+                                key={seminar.id}
+                                name={seminar.name}
+                                short_description={seminar.short_description}
+                                speaker={seminar.speaker}
+                                date_and_time={seminar.date_and_time}
+                            />
+                          </Link>
+                        ))}
                     </div>
                 </div>
             </div>

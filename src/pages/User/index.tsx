@@ -1,8 +1,35 @@
 import Link from 'next/link'
 import Sidebar_2 from 'components/Sidebar_2'
 import Seminar from 'components/Seminar'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function User_Dashboard_Home() {
+    const [seminarApplied, setSeminarApplied] = useState(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("https://walrus-app-elpr8.ondigitalocean.app/api/seminars/applied", { headers: { Authorization: `${token}`, } });
+            if (response) {
+              setSeminarApplied(response.data.seminars); // Assuming the actual data is stored in response.data
+              console.log(response.data.seminars);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarApplied !== null) {
+          console.log(seminarApplied);
+          // Perform any other operations that depend on seminarApplied
+        }
+      }, [seminarApplied]);
   return (
     <>
         <div className="flex">
@@ -25,12 +52,17 @@ export default function User_Dashboard_Home() {
                 {/* Judul */}
                 <h2 className="text-2xl font-semibold">Seminar Yang Diikuti</h2>    
                 <div className="flex flex-col gap-y-4 md:flex-row lg:flex-row md:space-x-4 lg:space-x-4">  
-                    {/* Card */}
-                    <Seminar/>
-                    {/* Card */}
-                    <Seminar/>
-                    {/* Card */}
-                    <Seminar/>
+                {seminarApplied && seminarApplied.map((seminar) => (
+                    <Link href={`/User/detail_seminar/${seminar.seminar_id}`}>
+                        <Seminar
+                            key={seminar.seminar_id}
+                            name={seminar.seminar_name}
+                            short_description={seminar.seminar_shortdesc}
+                            speaker={seminar.seminar_speaker}
+                            date_and_time={seminar.seminar_date} 
+                        />
+                    </Link>
+                ))}
                 </div>
             </div>
         </div>

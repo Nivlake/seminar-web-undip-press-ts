@@ -1,8 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar_2 from 'components/Sidebar_2'
 import Komentar from 'components/Komentar'
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function detail_seminar() {
+    const router = useRouter();
+    const pathSegments = router.asPath.split('/');
+    const seminar_id = pathSegments[pathSegments.length - 1];
+    const [seminarData, setSeminarData] = useState(null);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const token = localStorage.getItem('access_token');
+            const config = {
+              headers: {
+                // Add your desired headers here
+                'Authorization': `${token}`
+              },
+            };
+      
+            const response = await axios.get(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/details/${seminar_id}`, config);
+            if (response) {
+                setSeminarData(response.data.seminar);
+            //   console.log(response.data.applicants) // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      
+      useEffect(() => {
+        if (seminarData !== null) {
+          console.log(seminarData);
+          // Perform any other operations that depend on participantData
+        }
+      }, [seminarData]);
   return (
     <>
         <div className="flex">
@@ -16,9 +54,9 @@ export default function detail_seminar() {
                             <img src="/index1.svg" alt="" />
                             <div className="flex flex-col p-2.5 gap-2.5">
                                 <div className="flex flex-row gap-2.5">
-                                    <h3 className="w-fit px-2.5 rounded-lg border border-black border-2">Teknologi</h3>
+                                    <h3 className="w-fit px-2.5 rounded-lg border border-black border-2">{seminarData && seminarData.category}</h3>
                                 </div>
-                                <h1 className="text-5xl font-bold tracking-tight text-black">Judul Seminar</h1>
+                                <h1 className="text-5xl font-bold tracking-tight text-black">{seminarData && seminarData.name}</h1>
                                 <h2 className="">Penyelenggara Seminar</h2>
                             </div> 
                         </div>
@@ -26,7 +64,7 @@ export default function detail_seminar() {
                             <p>&nbsp;&nbsp;Terbuka Hingga:</p>
                             <p className="font-bold">12/02/2023</p>
                             <p>Sisa Kuota:</p>
-                            <p className="font-bold">0</p>
+                            <p className="font-bold">{(seminarData && seminarData.quota) - (seminarData && seminarData.participant_count)}</p>
                         </div>
                     </div>
                 </div>
@@ -37,8 +75,7 @@ export default function detail_seminar() {
                             <p className="font-bold text-white text-center py-[5.2rem]">Image Place In Here</p>
                         </div>
                         <p className="text-justify">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae tortor accumsan nibh consequat gravida. Nunc et mollis erat. Phasellus vulputate vestibulum nisi, vitae ultrices mauris blandit nec. Praesent sit amet molestie nisl, sit amet varius nisi. Nulla quis cursus elit, non rutrum diam. Donec rutrum auctor massa ut lobortis. Aenean vitae accumsan nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque consectetur id neque eget congue.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae tortor accumsan nibh consequat gravida. Nunc et mollis erat. Phasellus vulputate vestibulum nisi, vitae ultrices mauris blandit nec. Praesent sit amet molestie nisl, ...
+                            {seminarData && seminarData.full_description}
                         </p>
                     </div>
                     <div className="flex flex-col p-4 gap-2">
