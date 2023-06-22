@@ -1,12 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar_2 from 'components/Sidebar_2'
 import Seminar from 'components/Seminar'
+import axios from 'axios';
+import Link from 'next/link';
 
 export default function list_seminar() {
+    const [seminarData, setSeminarData] = useState(null);
     const selectStyle: React.CSSProperties = {
         WebkitAppearance: 'none',
         MozAppearance: 'none',
       };
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get("https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming");
+            if (response) {
+              setSeminarData(response.data); // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        if (seminarData !== null) {
+          console.log(seminarData);
+          // Perform any other operations that depend on seminarData
+        }
+      }, [seminarData]);
     return (
         <>
             <div className="flex">
@@ -36,9 +61,7 @@ export default function list_seminar() {
                     </div>
 
                 </div>
-                
-                
-
+    
                 {/* Judul */}
                 <div className="flex flex-row justify-between">
                 <h2 className="text-2xl font-semibold">Seminar yang akan datang</h2>  
@@ -60,19 +83,18 @@ export default function list_seminar() {
                         </div>
                     </div>
                 </div>
-
-                
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
-                        {/* Card */}
-                        <Seminar/>
+                        {seminarData && seminarData.map((seminar) => (
+                          <Link href={`/User/detail_seminar/${seminar.id}`}>
+                            <Seminar
+                                key={seminar.id}
+                                name={seminar.name}
+                                short_description={seminar.short_description}
+                                speaker={seminar.speaker}
+                                date_and_time={seminar.date_and_time}
+                            />
+                          </Link>
+                        ))}
                     </div>
                 </div>
             </div>

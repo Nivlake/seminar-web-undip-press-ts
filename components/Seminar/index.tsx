@@ -1,4 +1,4 @@
-export default function Seminar() {
+export default function Seminar(props: { name: any; short_description: any; speaker: any; date_and_time: any; }) {
     return (
       <div className="max-w-xs rounded-xl overflow-hidden shadow-lg">
         <img src="/homecard.svg" alt="Placeholder" className="w-full" />
@@ -7,18 +7,17 @@ export default function Seminar() {
             <img src="../icon/narasumber.svg" />
             <div className="text-neutral-900 flex flex-row">
                 <div>
-                    Narasumber 1, Narasumber 2
+                    {props.speaker}
                 </div>
             </div>
           </div>
-          <div className="font-bold text-xl mb-2">The Future of Artificial Intelligence</div>
+          <div className="font-bold text-xl mb-2">{props.name}</div>
           <p className="text-gray-700 line-clamp-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet semper ipsum semper ipsum semper
-            ipsum semper ipsum semper ipsum semper ipsum.
+            {props.short_description}
           </p>
           <div className="flex flex-col">
             <div className="font-bold text-gray-900">
-                Rabu, 31 Januari 2023
+              {new Date(props.date_and_time).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </div>
             <div className="font-bold text-gray-900">
                 11.00 - 13.00 WIB

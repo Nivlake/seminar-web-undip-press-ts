@@ -34,7 +34,7 @@ export default function Home() {
             <h1 className='text-5xl text-white font-semibold'>Tingkatkan pengetahuanmu melalui seminar UNDIP</h1>
             <h2 className='mt-4 text-lg text-white font-normal'>Bergabunglah dengan Seminar UNDIP, di mana kamu akan mendapat kesempatan untuk belajar dari para ahli industri dan pemikir terkemuka di bidangmu.</h2>
             {user ? (
-              <button className='mt-4 px-5 py-3 text-white rounded-lg bg-primary-300 hover:bg-primary-600 focus:bg-primary-600'>Hai {user && user.email}</button>
+              <button className='mt-4 px-5 py-3 text-white rounded-lg bg-primary-300 hover:bg-primary-600 focus:bg-primary-600'>Hai {user && user.name}</button>
             ) : (
               <Link href='/Login'><button className='mt-4 px-5 py-3 text-white rounded-lg bg-primary-300 hover:bg-primary-600 focus:bg-primary-600'>Sign In</button></Link>
             )}
