@@ -37,7 +37,7 @@ export default function Sidebar_2() {
                     <img src="../../icon/text-up.svg" className={`${showSidebar ? "" : "hidden"}`} />                  
                     <button 
                         onClick={() => setShowSidebar(!showSidebar)}>
-                            <img src={`${showSidebar ? ".../icon/chevron-left.svg" : "../icon/chevron-right.svg"}`} 
+                            <img src={`${showSidebar ? "../../icon/chevron-left.svg" : "../../icon/chevron-right.svg"}`} 
                         className="" 
                         alt=""/>
                     </button>

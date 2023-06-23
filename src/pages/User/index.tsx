@@ -6,9 +6,22 @@ import axios from 'axios';
 
 export default function User_Dashboard_Home() {
     const [seminarApplied, setSeminarApplied] = useState(null);
+    const [user, setUser] = useState(null);
+    const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
+      axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/user', { headers: { Authorization: `${token}`, } })
+        .then(response => {
+          setUser(response.data);
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(token)
+        });
+    }, []);
+
+    useEffect(() => {
         const fetchData = async () => {
           try {
             const response = await axios.get("https://walrus-app-elpr8.ondigitalocean.app/api/seminars/applied", { headers: { Authorization: `${token}`, } });
@@ -37,7 +50,7 @@ export default function User_Dashboard_Home() {
                 <Sidebar_2/>
             </aside>
             <div className="p-8 flex-col space-y-6 w-full">
-                <h1 className="text-3xl font-semibold">Selamat Datang, User</h1>
+                <h1 className="text-3xl font-semibold">Selamat Datang, {user && user.name}</h1>
                 {/* Notification */}
                 <div className="flex flex-row space-x-4 mx-auto p-5 items-center bg-danger-100 rounded-xl">
                     <img src="../icon/warning.svg" alt="" className="self-start" />
@@ -57,7 +70,7 @@ export default function User_Dashboard_Home() {
                         <Seminar
                             key={seminar.seminar_id}
                             name={seminar.seminar_name}
-                            short_description={seminar.seminar_shortdesc}
+                            short_description={seminar.seminar_short_description}
                             speaker={seminar.seminar_speaker}
                             date_and_time={seminar.seminar_date} 
                         />
