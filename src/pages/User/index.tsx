@@ -3,17 +3,20 @@ import Sidebar_2 from 'components/Sidebar_2'
 import Seminar from 'components/Seminar'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function User_Dashboard_Home() {
+  const router = useRouter();
     const [seminarApplied, setSeminarApplied] = useState(null);
     const [user, setUser] = useState(null);
-    const token = localStorage.getItem('access_token');
-
     useEffect(() => {
+
+      const token = localStorage.getItem('access_token');
       axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/user', { headers: { Authorization: `${token}`, } })
         .then(response => {
           setUser(response.data);
           console.log(response);
+
         })
         .catch(error => {
           console.log(error);
@@ -21,7 +24,11 @@ export default function User_Dashboard_Home() {
         });
     }, []);
 
+    if (user && user.role === 'admin') {
+      router.push('/Admin');
+    }
     useEffect(() => {
+      const token = localStorage.getItem('access_token');
         const fetchData = async () => {
           try {
             const response = await axios.get("https://walrus-app-elpr8.ondigitalocean.app/api/seminars/applied", { headers: { Authorization: `${token}`, } });

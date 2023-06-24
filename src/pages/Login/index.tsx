@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setCookie } from 'nookies';
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -23,6 +24,10 @@ export default function Login() {
                 toast.success('Login Berhasil!');
                 router.push('/');
                 localStorage.setItem('access_token', `Bearer ${response.data.token}`);
+                setCookie(null, 'access_token', `${response.data.token}`, {
+                    maxAge: 30 * 24 * 60 * 60, // 30 days
+                    path: '/',
+                  });
                 console.log(response.data.token)
         } catch (error) {
             toast.error(error.response.data.message);
