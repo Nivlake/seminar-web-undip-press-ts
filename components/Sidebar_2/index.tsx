@@ -9,8 +9,19 @@ export default function Sidebar_2() {
   const [showSidebar, setShowSidebar] = useState(false);
   const router = useRouter();
   const [user, setUser] = useState(null);
-  const nameLocal = localStorage.getItem('user_name');
-  const emailLocal = localStorage.getItem('user_email');
+  const [nameLocal, setNameLocal] = useState<string | null>(null);
+  const [emailLocal, setEmailLocal] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      const nameFromLocalStorage = localStorage.getItem('user_name');
+      const emailFromLocalStorage = localStorage.getItem('user_email');
+      setNameLocal(nameFromLocalStorage);
+      setEmailLocal(emailFromLocalStorage);
+    }
+  }, []);
+
   const handleLogout = () => {
     const token = localStorage.getItem('access_token');
     axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/logout', {}, {
