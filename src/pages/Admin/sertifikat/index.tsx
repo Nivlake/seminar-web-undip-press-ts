@@ -46,7 +46,7 @@ export default function upcoming(){
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
                     <h1 className="text-3xl font-semibold px-2.5">Manajemen Sertifikat</h1>
                     <div className="p-2.5">
-                        <div className="container flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
+                        <div className="container flex flex-col bg-primary-200 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
                             <div className="flex justify-end">
                                 <div className="mb-3 xl:w-96">

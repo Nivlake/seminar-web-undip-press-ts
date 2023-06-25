@@ -26,7 +26,7 @@ export default function upcoming(){
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming');
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/past');
             if (response) {
               setSeminarData(response.data); // Assuming the actual data is stored in response.data
             }
@@ -70,7 +70,7 @@ export default function upcoming(){
                   'Your file has been deleted.',
                   'success'
                 ).then(() =>{
-                  window.location.reload(); // Refresh the page
+                    router.push('/upcoming');
                 });
               } else {
                 Swal.fire(
@@ -120,7 +120,7 @@ export default function upcoming(){
                     <Admin_Sidebar/>
                 </aside>
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
-                    <h1 className="text-3xl font-semibold px-2.5">Upcoming Seminar</h1>
+                    <h1 className="text-3xl font-semibold px-2.5">Past Seminar</h1>
                     <div className="p-2.5">
                         <div className="container w-full flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
@@ -142,7 +142,6 @@ export default function upcoming(){
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -150,18 +149,8 @@ export default function upcoming(){
                                       <tr key={seminar.id}>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.short_description.slice(0, 20)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                          <div className="flex justify-center gap-7">
-                                            <button>
-                                              <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" onClick={() => setShowModal(true)} />
-                                            </button>
-                                            <button>
-                                              <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
-                                            </button>
-                                          </div>
-                                        </td>
                                       </tr>
                                     ))}
 
