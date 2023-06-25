@@ -1,15 +1,27 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import React from "react";
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import axios from "axios";
-import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import Link from "next/link";
 
 
 export default function upcoming(){
-    const [showModal, setShowModal] = useState(false);
     const [seminarData, setSeminarData] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const router = useRouter();
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      
+      const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      };
+      
+      return date.toLocaleDateString('id-ID', options);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,7 +36,7 @@ export default function upcoming(){
         };
       
         fetchData();
-    }, []);
+      }, []);
       
       useEffect(() => {
         if (seminarData !== null) {
@@ -32,25 +44,54 @@ export default function upcoming(){
           // Perform any other operations that depend on seminarData
         }
       }, [seminarData]);
-    const Delete = () =>{
+      
+      const Delete = (idseminar) => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const token = localStorage.getItem('access_token');
+            fetch(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${idseminar}`, {
+              method: 'Delete',
+              headers: {
+                'Authorization': `${token}`
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                ).then(() =>{
+                    router.push('/upcoming');
+                });
+              } else {
+                Swal.fire(
+                  'Error',
+                  'Failed to delete the file.',
+                  'error'
+                );
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
               Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
-            }
-          })
-    }
+                'Error',
+                'An error occurred while deleting the file.',
+                'error'
+              );
+            });
+          }
+        });
+      };
+      
     const Save = () =>{
         Swal.fire({
             title: 'Do you want to save the changes?',
@@ -81,7 +122,7 @@ export default function upcoming(){
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
                     <h1 className="text-3xl font-semibold px-2.5">Past Seminar</h1>
                     <div className="p-2.5">
-                        <div className="container flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
+                        <div className="container w-full flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
                             <div className="flex justify-end">
                                 <div className="mb-3 xl:w-96">
@@ -94,32 +135,27 @@ export default function upcoming(){
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
-                            <table className="table-auto w-full">
-                                <thead className="bg-gray-700 text-white">
+                                <table className="table-auto w-full">
+                                    <thead className="bg-gray-700 text-white">
                                     <tr>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Total Peserta</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                     {seminarData && currentRows.map((seminar) => (
-                                        <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.date_and_time}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.participant_count}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                            <Link href={`/Admin/peserta/past/detail/${seminar.id}`}>
-                                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                    Details
-                                                </button>
-                                            </Link>
-                                            </td>
-                                        </tr>
+                                      <tr key={seminar.id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
+                                      </tr>
                                     ))}
+
                                     </tbody>
-                                </table>
+                                </table>                
                                 {/* Modal */}
                                 {showModal ? (
                                 <div className="fixed z-10 inset-0">

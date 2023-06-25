@@ -61,18 +61,6 @@ export default function Admin_Sidebar() {
                             <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700`}>Manajemen Peserta</span>
                         </Link>
                     </li>
-                    <li className="min-w-max">
-                        <Link href="/Admin/sertifikat" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400">
-                            <img src='/icon/certificate.svg'/>
-                            <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700`}>Manajemen Sertifikat</span>
-                        </Link>
-                    </li>
-                    <li className="min-w-max">
-                        <Link href="/Admin/laporan" className="group flex items-center space-x-4 rounded-md px-4 py-3 text-white hover:bg-primary-400">
-                            <img src='/icon/chart-bar.svg'/>
-                            <span className={`${showSidebar ? "" : "hidden"} group-hover:text-gray-700`}>Laporan dan Analitik</span>
-                        </Link>
-                    </li>
                 </ul>
             </div>
             <div className="flex flex-col w-max mx-auto -mb-3">
