@@ -7,34 +7,36 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 interface IFormInput {
-    ktpNumber: string;
-    bornPlace: string;
+    no_KTP: string;
+    tempat_lahir: string;
     date: string;
-    address: string;
+    alamat: string;
 }
 
 export default function pembaruan_berkas() {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const router = useRouter();
 
-    const [ktpNumber, setKtpNumber] = useState("");
-    const [bornPlace, setBornPlace] = useState("");
+    const [no_KTP, setno_KTP] = useState("");
+    const [tempat_lahir, settempat_lahir] = useState("");
     const [date, setDate] = useState("");
-    const [address, setAddress] = useState("");
+    const [alamat, setalamat] = useState("");
     
     const handleSubmitBerkas = async (data: IFormInput) => {
         const token = localStorage.getItem('access_token');
         // const data = {
-        //     ktpNumber: ktpNumber,
-        //     bornPlace: bornPlace,
+        //     no_KTP: no_KTP,
+        //     tempat_lahir: tempat_lahir,
         //     date: date,
-        //     address: address
+        //     alamat: alamat
         // }
         try {
-            axios.post("https://walrus-app-elpr8.ondigitalocean.app/user/update", data, {
+            axios.post("https://walrus-app-elpr8.ondigitalocean.app/api/user/update", data, {
                 headers: {
-                  Authorization: `${token}`
-                }
+                  Authorization: `${token}`,
+                //   'Sec-Fetch-Site': 'cross-site'
+                },
+                // referrerPolicy: 'no-referrer'
               })
               .then(response => {
                 // Handle successful response here
@@ -80,29 +82,29 @@ export default function pembaruan_berkas() {
                     <form className="flex flex-col space-y-8" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-row items-center">
                             <label className="w-32">No KTP</label>
-                            <input className={`${errors?.ktpNumber? "focus:border-danger-500" : "focus:border-indigo-500"} w-96 p-2 rounded-lg border-2 border-gray-200 outline-none`} type="text" placeholder="" 
-                                {...register("ktpNumber", {
+                            <input className={`${errors?.no_KTP? "focus:border-danger-500" : "focus:border-indigo-500"} w-96 p-2 rounded-lg border-2 border-gray-200 outline-none`} type="text" placeholder="" 
+                                {...register("no_KTP", {
                                     required: true, 
                                     maxLength: 100,
                                     pattern: /^\d+$/ // Only allow numbers
                                 })}
-                                value={ktpNumber} 
-                                onChange={(e) => setKtpNumber(e.target.value)} 
+                                value={no_KTP} 
+                                onChange={(e) => setno_KTP(e.target.value)} 
                             />
-                            {errors?.ktpNumber?.type === "required" && <p className="ml-1 text-danger-500">This field is required</p>}
-                            {errors?.ktpNumber?.type === "maxLength" && (<p className="ml-1 text-danger-500">First name cannot exceed 20 characters</p>)}
-                            {errors?.ktpNumber?.type === "pattern" && (<p className="ml-1 text-danger-500">Not the correct format for a KTP</p>)}
+                            {errors?.no_KTP?.type === "required" && <p className="ml-1 text-danger-500">This field is required</p>}
+                            {errors?.no_KTP?.type === "maxLength" && (<p className="ml-1 text-danger-500">First name cannot exceed 20 characters</p>)}
+                            {errors?.no_KTP?.type === "pattern" && (<p className="ml-1 text-danger-500">Not the correct format for a KTP</p>)}
                         </div>
                         <div className="flex flex-row items-center">
                             <label className="w-32">Tempat Lahir</label>
-                            <input className={`${errors?.bornPlace? "focus:border-danger-500" : "focus:border-indigo-500"} w-96 p-2 rounded-lg border-2 border-gray-200 outline-none`} type="text" placeholder="" 
-                                {...register("bornPlace", {
+                            <input className={`${errors?.tempat_lahir? "focus:border-danger-500" : "focus:border-indigo-500"} w-96 p-2 rounded-lg border-2 border-gray-200 outline-none`} type="text" placeholder="" 
+                                {...register("tempat_lahir", {
                                     required: true,
                                 })}
-                                value={bornPlace} 
-                                onChange={(e) => setBornPlace(e.target.value)} 
+                                value={tempat_lahir} 
+                                onChange={(e) => settempat_lahir(e.target.value)} 
                             />
-                            {errors?.bornPlace?.type === "required" && <p className="ml-1 text-danger-500">This field is required</p>}
+                            {errors?.tempat_lahir?.type === "required" && <p className="ml-1 text-danger-500">This field is required</p>}
                         </div>
                         <div className="flex flex-row items-center">
                             <label className="w-32">Tanggal Lahir</label>
@@ -115,14 +117,14 @@ export default function pembaruan_berkas() {
                         </div>  
                         <div className="flex flex-row items-center">
                             <label className="w-32">Alamat</label>
-                            <input className={`${errors?.address? "focus:border-danger-500" : "focus:border-indigo-500"} w-96 p-2 rounded-lg border-2 border-gray-200 outline-none`} type="text" placeholder="" 
-                                {...register("address", {
+                            <input className={`${errors?.alamat? "focus:border-danger-500" : "focus:border-indigo-500"} w-96 p-2 rounded-lg border-2 border-gray-200 outline-none`} type="text" placeholder="" 
+                                {...register("alamat", {
                                     required: true
                                 })}
-                                value={address} 
-                                onChange={(e) => setAddress(e.target.value)} 
+                                value={alamat} 
+                                onChange={(e) => setalamat(e.target.value)} 
                             />
-                            {errors?.address?.type === "required" && <p className="ml-1 text-danger-500">This field is required</p>}
+                            {errors?.alamat?.type === "required" && <p className="ml-1 text-danger-500">This field is required</p>}
                         </div>
                         {/* ini nanti kalo sukses dikasih toast react aja */}
                         <button className="w-32 p-2 text-white rounded-lg bg-primary-500 hover:bg-primary-600 focus:bg-primary-600 duration-300" type="submit">Update</button>
