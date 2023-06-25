@@ -9,6 +9,8 @@ export default function Sidebar_2() {
   const [showSidebar, setShowSidebar] = useState(false);
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const nameLocal = localStorage.getItem('user_name');
+  const emailLocal = localStorage.getItem('user_email');
   const handleLogout = () => {
     const token = localStorage.getItem('access_token');
     axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/logout', {}, {
@@ -80,8 +82,8 @@ export default function Sidebar_2() {
                 <Link href="/User/user_profile" className="group flex items-center space-x-4 rounded-md px-9 py-2 text-gray-600">
                     <img src="../../face.png" className="w-10 h-10 rounded-full"/>
                     <div className={`${showSidebar ? "" : "hidden"} flex flex-col`}>
-                        <span className="text-white font-bold">User</span>
-                        <span className="text-white">user@gmail.com</span>
+                        <span className="text-white font-bold">{nameLocal}</span>
+                        <span className="text-white">{emailLocal}</span>
                     </div>
                 </Link>
             </div>
