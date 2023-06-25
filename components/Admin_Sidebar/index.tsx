@@ -77,14 +77,14 @@ export default function Admin_Sidebar() {
             </div>
             <div className="flex flex-col w-max mx-auto -mb-3">
                 <button onClick={handleLogout} className="group flex items-center space-x-4 px-9 py-2 text-gray-600">
-                    <img src="../icon/logout.svg" className="w-10 h-10 p-1" />
+                    <img src="/icon/logout.svg" className="w-10 h-10 p-1" />
                     <div className={`${showSidebar ? "" : "hidden"}`}>
                         <span className="text-white font-bold">Keluar</span>
                     </div>
                 </button>
                 <div className="my-4 bg-white h-[1px] w-96"></div>
                 <a href="#" className="group flex items-center space-x-4 rounded-md px-9 py-2 text-gray-600">
-                    <img src="../face.png" className="w-10 h-10 rounded-full"/>
+                    <img src="/face.png" className="w-10 h-10 rounded-full"/>
                     <div className={`${showSidebar ? "" : "hidden"} flex flex-col`}>
                         <span className="text-white font-bold">Admin</span>
                         <span className="text-white">admin@gmail.com</span>

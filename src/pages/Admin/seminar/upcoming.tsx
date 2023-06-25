@@ -70,7 +70,7 @@ export default function upcoming(){
                   'Your file has been deleted.',
                   'success'
                 ).then(() =>{
-                    router.push('/upcoming');
+                  window.location.reload(); // Refresh the page
                 });
               } else {
                 Swal.fire(
@@ -109,9 +109,9 @@ export default function upcoming(){
     const rowsPerPage = 5;
 
     // Calculate the index range for the current page
-  const indexOfLastRow = currentPage * rowsPerPage;
-  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = seminarData&& seminarData.slice(indexOfFirstRow, indexOfLastRow);
+    const indexOfLastRow = currentPage * rowsPerPage;
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+    const currentRows = seminarData&& seminarData.slice(indexOfFirstRow, indexOfLastRow);
 
     return(
         <>
@@ -239,8 +239,9 @@ export default function upcoming(){
                             <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">
                                 <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
                                     <div className="flex align-center gap-2.5">
-                                        <button onClick={() => setCurrentPage(1)}><img src="/icon/chevron-double-left.svg" alt="" /></button>
-                                        <button onClick={() => setCurrentPage(currentPage - 1)}><img src="/icon/chevron-left-admin.svg" alt="" /></button>
+                                      <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                                        <img src="/icon/chevron-double-left.svg" alt="" /></button>
+                                      <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><img src="/icon/chevron-left-admin.svg" alt="" /></button>
                                     </div>
                                     <div className="flex gap-5">
                                       {Array(Math.ceil(seminarData&& seminarData.length / rowsPerPage)).fill().map((_, index) => (
@@ -248,8 +249,8 @@ export default function upcoming(){
                                       ))}
                                     </div>
                                     <div className="flex align-center gap-2.5">
-                                        <button onClick={() => setCurrentPage(currentPage + 1)}><img src="/icon/chevron-right-admin.svg" alt="" /></button>
-                                        <button onClick={() => setCurrentPage(Math.ceil(seminarData&& seminarData.length / rowsPerPage))}><img src="/icon/chevron-double-right.svg" alt="" /></button>
+                                        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-right-admin.svg" alt="" /></button>
+                                        <button onClick={() => setCurrentPage(Math.ceil(seminarData&& seminarData.length / rowsPerPage))} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-double-right.svg" alt="" /></button>
                                     </div>
                                 </div> 
                             </div>
