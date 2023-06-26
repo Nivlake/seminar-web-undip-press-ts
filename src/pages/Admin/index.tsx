@@ -1,7 +1,24 @@
 import Admin_Sidebar from "components/Admin_Sidebar";
 import Link from "next/link";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 export default function Admin(){
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+      const token = localStorage.getItem('access_token');
+      axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/user', { headers: { Authorization: `${token}`, } })
+        .then(response => {
+          setUser(response.data);
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(token)
+        });
+    }, []);
     return (
         <>
             <div className="flex">
@@ -9,7 +26,7 @@ export default function Admin(){
                     <Admin_Sidebar/>
                 </aside>
                 <div className="p-8 gap-6">
-                    <h1 className="text-3xl font-semibold px-2.5">Selamat Datang, Admin</h1>
+                    <h1 className="text-3xl font-semibold px-2.5">Selamat Datang, {user && user.name}</h1>
                     <div className="flex flex-col gap-2.5">
                         <div className="container mt-6 flex flex-row gap-5 mx-auto">  
                             {/* Card */}

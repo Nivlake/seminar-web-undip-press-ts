@@ -9,6 +9,21 @@ export default function Admin_Sidebar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const [nameLocal, setNameLocal] = useState<string | null>(null);
+  const [emailLocal, setEmailLocal] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      const nameFromLocalStorage = localStorage.getItem('user_name');
+      const emailFromLocalStorage = localStorage.getItem('user_email');
+      setNameLocal(nameFromLocalStorage);
+      setEmailLocal(emailFromLocalStorage);
+    }
+  }, []);
+
+
+
   const handleLogout = () => {
     const token = localStorage.getItem('access_token');
     axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/logout', {}, {
@@ -74,8 +89,8 @@ export default function Admin_Sidebar() {
                 <a href="#" className="group flex items-center space-x-4 rounded-md px-9 py-2 text-gray-600">
                     <img src="/face.png" className="w-10 h-10 rounded-full"/>
                     <div className={`${showSidebar ? "" : "hidden"} flex flex-col`}>
-                        <span className="text-white font-bold">Admin</span>
-                        <span className="text-white">admin@gmail.com</span>
+                    <span className="text-white font-bold">{nameLocal}</span>
+                        <span className="text-white">{emailLocal}</span>
                     </div>
                 </a>
             </div>

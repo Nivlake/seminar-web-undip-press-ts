@@ -5,7 +5,8 @@ import {useEffect,useState} from 'react';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import Link from "next/link";
-
+import ExcelJS from 'exceljs';
+import FileSaver from 'file-saver';
 
 export default function upcoming(){
     const [attendance, setAttendance] = useState([true, false, true]); // Dummy attendance data
@@ -18,6 +19,7 @@ export default function upcoming(){
     const pathSegments = router.asPath.split('/');
     const seminar = pathSegments[pathSegments.length - 1];
     const [participantData, setParticipantData] = useState(null);
+    const [namaseminar, setNamaSeminar] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -32,6 +34,7 @@ export default function upcoming(){
             const response = await axios.get(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${seminar}`, config);
             if (response) {
               setParticipantData(response.data.applicants);
+              setNamaSeminar(response.data.nama_seminar);
             //   console.log(response.data.applicants) // Assuming the actual data is stored in response.data
             }
           } catch (error) {
@@ -41,8 +44,26 @@ export default function upcoming(){
       
         fetchData();
       }, []);
-      
-      
+
+
+      //handle using excel js to download excel file based on participantdata
+        const handleDownload = async () => {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet(namaseminar);
+            worksheet.columns = [
+                { header: 'Nama', key: 'participant_name', width: 30 },
+                { header: 'Identitas', key: 'participant_phone', width: 30 },
+                {header: 'Email', key: 'participant_email', width: 30},
+                { header: 'instansi', key: 'participant_instansi', width: 30},
+                { header: 'fakultas', key: 'participant_fakultas', width: 30},
+                { header: 'posisi', key: 'participant_posisi', width: 30},
+                { header: 'Kehadiran', key: 'attendance', width: 30 },
+            ];
+            worksheet.addRows(participantData);
+            const buf = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            FileSaver.saveAs(blob, `Daftar Hadir ${namaseminar}.xlsx`);
+        };
       useEffect(() => {
         if (participantData !== null) {
           console.log(participantData);
@@ -96,11 +117,16 @@ export default function upcoming(){
                                             </td>
                                         </tr>
                                     ))}
+                                    
                                 </tbody>
                             </table>
+
                             </div>
                             {/* Page */}
                             <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">
+                            <button onClick={handleDownload} className="btn inline-block px-6 py-2.5 bg-white border-t border-r border-b border-solid border-gray-300 text-blue-700 font-medium text-xs leading-tight uppercase rounded-r shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center" type="button" id="button-addon2">
+    Export to Excel
+</button>
                                 <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
                                     <div className="flex align-center gap-2.5">
                                         <button><img src="/icon/chevron-double-left.svg" alt="" /></button>

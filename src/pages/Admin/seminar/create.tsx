@@ -160,12 +160,12 @@ export default function createSeminar(){
           <h1 className="text-3xl font-semibold px-2.5">Buat Seminar Baru</h1>
           {/* Form */}
           <form action="" className="flex flex-col px-2.5 gap-5">
-            <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">
+            {/* <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">
               <h3 className="text-white">Insert Image Here</h3>
             </div>
             <div className="flex w-[44.188rem] h-[12.438rem] bg-neutral-500 justify-center items-center">
               <h3 className="text-white">Insert Image Here</h3>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-4">
               <div className="flex h-11 gap-8 items-center">
                 <h3 className="w-[8.875rem]">Nama Seminar</h3>
@@ -209,7 +209,7 @@ export default function createSeminar(){
                 {/* <button className="w-[11.75rem] h-full border border-neutral-300 rounded-md"></button> */}
                 <div className="flex flex-col gap-1 h-5">
                   <div className="flex flex-col gap-2.5 justify-center">
-                    <div className="">
+                    <div>
                       <select
                         className="w-[11.75rem] border border-neutral-300 rounded-lg"
                         name=""
@@ -217,6 +217,7 @@ export default function createSeminar(){
                         value={selectedOption}
                         onChange={handleFirstOptionChange}
                       >
+                        <option value="">---</option>
                         <option value="Online">Online</option>
                         <option value="Offline">Offline</option>
                       </select>

@@ -216,8 +216,7 @@ export default function detail_seminar() {
                         <div className="flex flex-row gap-4">
                             <img src="../../icon/location.svg"/>
                             <div className="flex flex-col">
-                                <p>UPT Perpustakaan</p>
-                                <p>dan Undip Press, Semarang</p>
+                                <p>{seminarData && seminarData.lokasi}</p>
                             </div>
                         </div>
                     </div>
