@@ -35,16 +35,7 @@ export default function createSeminar(){
       router.push('/Admin/seminar');
     }
   };
-  // const formatDateTime = (dateTime) => {
-  //   const selectedDate = new Date(dateTime);
-  //   const day = selectedDate.getDate().toString().padStart(2, '0');
-  //   const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-  //   const year = selectedDate.getFullYear();
-  //   const hours = selectedDate.getHours().toString().padStart(2, '0');
-  //   const minutes = selectedDate.getMinutes().toString().padStart(2, '0');
-  //   const seconds = selectedDate.getSeconds().toString().padStart(2, '0');
-  //   return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-  // };
+
   const handleCreateSeminar = async () => {
     const date = new Date(date_and_time);
     const formattedDate = date.toISOString().split('T')[0];
