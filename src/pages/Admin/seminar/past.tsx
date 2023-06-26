@@ -10,8 +10,6 @@ import Link from "next/link";
 export default function upcoming(){
     const [seminarData, setSeminarData] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [selectedSeminar, setSelectedSeminar] = useState(null);
-
     const router = useRouter();
     const formatDate = (dateString) => {
       const date = new Date(dateString);
@@ -28,7 +26,7 @@ export default function upcoming(){
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/upcoming');
+            const response = await axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/seminars/past');
             if (response) {
               setSeminarData(response.data); // Assuming the actual data is stored in response.data
             }
@@ -72,7 +70,7 @@ export default function upcoming(){
                   'Your file has been deleted.',
                   'success'
                 ).then(() =>{
-                  window.location.reload(); // Refresh the page
+                    router.push('/upcoming');
                 });
               } else {
                 Swal.fire(
@@ -94,54 +92,18 @@ export default function upcoming(){
         });
       };
       
-      const Save = async () => {
-        try {
-          const result = await Swal.fire({
+    const Save = () =>{
+        Swal.fire({
             title: 'Do you want to save the changes?',
             showCancelButton: true,
             confirmButtonText: 'Save',
-          });
-      
-          if (result.isConfirmed) {
-            // Prepare the data to be sent in the request body
-            const updatedData = {
-              name: selectedSeminar.name,
-              short_description: selectedSeminar.short_description,
-              full_description: selectedSeminar.full_description,
-              speaker: selectedSeminar.speaker,
-              quota: selectedSeminar.quota,
-              date_and_time: selectedSeminar.date_and_time,
-              lokasi: selectedSeminar.lokasi,
-              alamat: selectedSeminar.alamat,
-              category: selectedSeminar.category,
-            };
-      
-            // Make the PUT request
-            const token = localStorage.getItem('access_token');
-            const response = await axios.put(
-              `https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${selectedSeminar.id}/edit`,
-              updatedData,
-              {
-                headers: {
-                  Authorization: `${token}`, // Replace <token> with the actual token
-                },
-              }
-            );
-      
-            // Handle the response as needed
-            console.log('Seminar updated successfully!', response.data);
-      
-            Swal.fire('Saved!', '', 'success');
-          } else {
-            Swal.fire('Changes not saved', '', 'info');
-          }
-        } catch (error) {
-          // Handle any errors that occur during the request
-          console.error('Error updating seminar:', error);
-          Swal.fire('Error!', 'Failed to save changes', 'error');
-        }
-      };
-      
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              Swal.fire('Saved!', '', 'success')
+            }
+          })
+    }
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
@@ -158,7 +120,7 @@ export default function upcoming(){
                     <Admin_Sidebar/>
                 </aside>
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
-                    <h1 className="text-3xl font-semibold px-2.5">Upcoming Seminar</h1>
+                    <h1 className="text-3xl font-semibold px-2.5">Past Seminar</h1>
                     <div className="p-2.5">
                         <div className="container w-full flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
@@ -180,7 +142,6 @@ export default function upcoming(){
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -188,28 +149,15 @@ export default function upcoming(){
                                       <tr key={seminar.id}>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.short_description.slice(0, 20)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                          <div className="flex justify-center gap-7">
-                                          <button onClick={() => {
-                                                setSelectedSeminar(seminar);
-                                                setShowModal(true);
-                                            }}>
-                                            <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                            </button>
-                                            <button>
-                                              <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
-                                            </button>
-                                          </div>
-                                        </td>
                                       </tr>
                                     ))}
 
                                     </tbody>
                                 </table>                
                                 {/* Modal */}
-                                {showModal  ? (
+                                {showModal ? (
                                 <div className="fixed z-10 inset-0">
                                     <div className="flex items-center justify-center min-h-screen">
                                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
@@ -229,7 +177,7 @@ export default function upcoming(){
                                             ></path>
                                         </svg>
                                         </button>
-                                        <h2 className="text-2xl font-bold mb-4">Edit Seminar</h2>
+                                        <h2 className="text-2xl font-bold mb-4">Modal Title</h2>
                                         {/* content */}
                                         <form action="" className="flex flex-col px-2.5 gap-5">
                                         <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">
@@ -241,119 +189,27 @@ export default function upcoming(){
                                         <div className="flex flex-col gap-4">
                                             <div className="flex h-11 gap-8 items-center">
                                             <h3 className="w-[8.875rem]">Nama Seminar</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" 
-                                            value={selectedSeminar && selectedSeminar.name}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    name: e.target.value,
-                                                }))}
-                                            />
+                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
                                         </div>
                                         <div className="flex h-[10.25rem] gap-8 items-center">
                                             <h3 className="w-[8.875rem]">Deskripsi</h3>
-                                            <textarea className="w-[38.625rem] h-full border border-neutral-300 rounded-md" 
-                                            value={selectedSeminar && selectedSeminar.short_description}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    short_description: e.target.value,
-                                                }))}/>
-                                        </div>
-                                        <div className="flex h-[10.25rem] gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Deskripsi Panjang</h3>
-                                            <textarea className="w-[38.625rem] h-full border border-neutral-300 rounded-md" 
-                                            value={selectedSeminar && selectedSeminar.full_description}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    full_description: e.target.value,
-                                                }))}/>
+                                            <textarea className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
                                         </div>
                                         <div className="flex h-11 gap-8 items-center">
                                             <h3 className="w-[8.875rem]">Nama Pembicara</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" 
-                                            value={selectedSeminar && selectedSeminar.speaker}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    speaker: e.target.value,
-                                                }))}/>
+                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
                                         </div>
                                         <div className="flex h-11 gap-8 items-center">
                                             <h3 className="w-[8.875rem]">Kategori</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" 
-                                            value={selectedSeminar && selectedSeminar.category}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    category: e.target.value,
-                                            }))}/>
+                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" />
                                         </div>
                                         <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Kuota</h3>
-                                            <input
-                                            type="number"
-                                            className="w-[38.625rem] h-full border border-neutral-300 rounded-md"
-                                            value={selectedSeminar && selectedSeminar.quota}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    quota: e.target.value,
-                                            }))}/>
+                                            <h3 className="w-[8.875rem]">Tanggal Penyelenggaraan</h3>
+                                            <input type="date" className="w-[11.75rem] h-full border border-neutral-300 rounded-md" />
                                         </div>
-                                        <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Tanggal dan Waktu Penyelenggaraan</h3>
-                                            <input
-                                            type="datetime-local"
-                                            className="w-[11.75rem] h-full border border-neutral-300 rounded-md"
-                                            value={selectedSeminar && selectedSeminar.date_and_time}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    date_and_time: e.target.value,
-                                            }))}/>
-                                        </div>
-                                        <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Lokasi</h3>
-                                            {/* <button className="w-[11.75rem] h-full border border-neutral-300 rounded-md"></button> */}
-                                            <div className="flex flex-col gap-1 h-5">
-                                            <div className="flex flex-col gap-2.5 justify-center">
-                                                <div className="">
-                                                    <select
-                                                        className="w-[11.75rem] border border-neutral-300 rounded-lg"
-                                                        name=""
-                                                        id=""
-                                                        value={selectedSeminar && selectedSeminar.lokasi}
-                                                        onChange={(e) =>
-                                                            setSelectedSeminar((prev) => ({
-                                                                ...prev,
-                                                                lokasi: e.target.value,
-                                                        }))}
-                                                    >
-                                                        <option value="Online">Online</option>
-                                                        <option value="Offline">Offline</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            
-                                            </div>
-                                        </div>
-                                        <div className="flex h-11 gap-8 items-center">
-                                            <h3 className="w-[8.875rem]">Alamat</h3>
-                                            <input type="text" className="w-[38.625rem] h-full border border-neutral-300 rounded-md" 
-                                            value={selectedSeminar && selectedSeminar.alamat}
-                                            onChange={(e) =>
-                                                setSelectedSeminar((prev) => ({
-                                                    ...prev,
-                                                    alamat: e.target.value,
-                                            }))}
-                                            />
-                                        </div>
-                                        
                                         </div>
                                         </form>
-                                        <div className="flex flex-row gap-2.5 mt-10">
+                                        <div className="flex flex-row gap-2.5 mt-5">
                                             <button className="flex flex-row bg-success-600 py-2.5 px-7 rounded-lg"
                                             onClick={Save}>
                                             <h3>Save</h3>

@@ -3,17 +3,131 @@ import Sidebar_2 from 'components/Sidebar_2'
 import Komentar from 'components/Komentar'
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default function detail_seminar() {
     const router = useRouter();
     const pathSegments = router.asPath.split('/');
     const seminar_id = pathSegments[pathSegments.length - 1];
     const [seminarData, setSeminarData] = useState(null);
+    const [user, setUser] = useState(null);
+    const [appliedSeminars, setAppliedSeminars] = useState(null);
+    const [isApplied, setIsApplied] = useState(false);
+
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    const appliedSeminars = localStorage.getItem("seminar_applied");
+    setAppliedSeminars(appliedSeminars);
+    const seminar_id = localStorage.getItem('seminar_id');
+    const isSeminarApplied = appliedSeminars && appliedSeminars.includes(seminar_id);
+    setIsApplied(isSeminarApplied);
+    console.log(isSeminarApplied);
+    
+
+    axios.get('https://walrus-app-elpr8.ondigitalocean.app/api/user', { headers: { Authorization: `${token}`, } })
+      .then(response => {
+        setUser(response.data);
+        console.log(response);
+        localStorage.setItem('seminar_applied', response.data.seminar_applied);
+        //SINI
+        const isSeminarApplied =
+          response.data.seminar_applied &&
+          response.data.seminar_applied.includes(seminar_id);
+      setIsApplied(isSeminarApplied);
+      })
+      .catch(error => {
+        console.log(error);
+        console.log(token)
+      });
+  }, []);
+    const handleSeminarApply = async () => {
+        const token = localStorage.getItem('access_token');
+        try {
+            axios.post(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${seminar_id}/apply`, {
+                // Add request data here, if any
+              }, {
+                headers: {
+                  Authorization: `${token}`
+                }
+              })
+              .then(response => {
+                router.push('/User');
+                // Handle successful response here
+                console.log(response.data);
+                const succesMessage = JSON.stringify(response.data.message);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Yeay!',
+                    text: `${succesMessage}`,
+                  })
+                setIsApplied(true); // Set isApplied to true after successful application
+              })
+              .catch(error => {
+                // Handle error here
+                console.log(error.response.data);
+                const errorMessage = JSON.stringify(error.response.data.error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `${errorMessage}`,
+                  })
+              });
+        } catch(error) {
+             // Log the error response
+        }
+    }
+
+    const handleSeminarCancel = async () => {
+      const token = localStorage.getItem('access_token');
+      try {
+          axios.post(`https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${seminar_id}/cancel`, {
+              // Add request data here, if any
+            }, {
+              headers: {
+                Authorization: `${token}`
+              }
+            })
+            .then(response => {
+              router.push('/User');
+              // Handle successful response here
+              console.log(response.data);
+              const succesMessage = JSON.stringify(response.data.message);
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Yeay!',
+                  text: `${succesMessage}`,
+                })
+              setIsApplied(false); // Set isApplied to true after successful application
+            })
+            .catch(error => {
+              // Handle error here
+              console.log(error.response.data);
+              const errorMessage = JSON.stringify(error.response.data.error);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: `${errorMessage}`,
+                })
+            });
+      } catch(error) {
+           // Log the error response
+      }
+  }
+
+
     
     useEffect(() => {
         const fetchData = async () => {
+          const segments = window.location.href.split('/');
+          if (localStorage.getItem('seminar_id') === 'undefined' || localStorage.getItem('seminar_id') !== segments[segments.length - 1]) {
+            const seminar_id = segments[segments.length - 1];
+            localStorage.setItem('seminar_id', seminar_id);
+          }
           try {
             const token = localStorage.getItem('access_token');
+            const seminar_id = localStorage.getItem('seminar_id');
             const config = {
               headers: {
                 // Add your desired headers here
@@ -80,7 +194,21 @@ export default function detail_seminar() {
                     </div>
                     <div className="flex flex-col p-4 gap-2">
                         <h1 className="text-2xl font-bold">Keikutsertaan</h1>
-                        <button className="bg-primary-500 hover:bg-primary-400 w-full rounded-lg px-8 py-1 text-white">Daftar</button>
+                        {isApplied ? (
+                          <button
+                            className="bg-danger-500 hover:bg-danger-400 w-full rounded-lg px-8 py-1 text-white"
+                            onClick={handleSeminarCancel}
+                          >
+                            Cancel
+                          </button>
+                        ) : (
+                          <button
+                            className="bg-primary-500 hover:bg-primary-400 w-full rounded-lg px-8 py-1 text-white"
+                            onClick={handleSeminarApply}
+                          >
+                            Daftar
+                          </button>
+                        )}
                         <h1 className="text-2xl font-bold">Jadwal Pelaksanaan</h1>
                         <p>Mulai : 05 Januari 2023 11.00</p>
                         <p>Selesai : 05 Januari 2023 13.00</p>

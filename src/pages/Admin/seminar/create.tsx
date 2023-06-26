@@ -157,7 +157,7 @@ export default function createSeminar(){
           <Admin_Sidebar/>
         </aside>
         <div className="w-full flex flex-col p-8 gap-6">
-          <h1 className="text-3xl font-semibold px-2.5">Data Seminar</h1>
+          <h1 className="text-3xl font-semibold px-2.5">Buat Seminar Baru</h1>
           {/* Form */}
           <form action="" className="flex flex-col px-2.5 gap-5">
             <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">

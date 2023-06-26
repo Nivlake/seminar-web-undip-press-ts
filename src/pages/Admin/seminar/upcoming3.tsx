@@ -229,7 +229,7 @@ export default function upcoming(){
                                             ></path>
                                         </svg>
                                         </button>
-                                        <h2 className="text-2xl font-bold mb-4">Edit Seminar</h2>
+                                        <h2 className="text-2xl font-bold mb-4">Modal Title</h2>
                                         {/* content */}
                                         <form action="" className="flex flex-col px-2.5 gap-5">
                                         <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">

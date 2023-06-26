@@ -63,6 +63,15 @@ export default function upcoming(){
             }
           })
     }
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 5;
+
+    // Calculate the index range for the current page
+    const indexOfLastRow = currentPage * rowsPerPage;
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+    const currentRows = seminarData&& seminarData.slice(indexOfFirstRow, indexOfLastRow);
+
     return(
         <>
             <div className="flex">
@@ -88,19 +97,19 @@ export default function upcoming(){
                             <table className="table-auto w-full">
                                 <thead className="bg-gray-700 text-white">
                                     <tr>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Judul</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider">Total Peserta</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider"></th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Total Peserta</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                    {seminarData && seminarData.map((seminar) => (
+                                    {seminarData && currentRows.map((seminar) => (
                                         <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{seminar.name}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.date_and_time}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{seminar.participant_count}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.date_and_time}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.participant_count}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                                             <Link href={`/Admin/peserta/past/detail/${seminar.id}`}>
                                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                     Details
@@ -183,19 +192,18 @@ export default function upcoming(){
                             <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">
                                 <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
                                     <div className="flex align-center gap-2.5">
-                                        <button><img src="/icon/chevron-double-left.svg" alt="" /></button>
-                                        <button><img src="/icon/chevron-left-admin.svg" alt="" /></button>
+                                      <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                                        <img src="/icon/chevron-double-left.svg" alt="" /></button>
+                                      <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><img src="/icon/chevron-left-admin.svg" alt="" /></button>
                                     </div>
                                     <div className="flex gap-5">
-                                        <button type="button">1</button>
-                                        <button type="button">2</button>
-                                        <button type="button">3</button>
-                                        <button type="button">4</button>
-                                        <button type="button" disabled>...</button>
+                                      {Array(Math.ceil(seminarData&& seminarData.length / rowsPerPage)).fill().map((_, index) => (
+                                        <button key={index} type="button" onClick={() => setCurrentPage(index + 1)}>{index + 1}</button>
+                                      ))}
                                     </div>
                                     <div className="flex align-center gap-2.5">
-                                        <button><img src="/icon/chevron-right-admin.svg" alt="" /></button>
-                                        <button><img src="/icon/chevron-double-right.svg" alt="" /></button>
+                                        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-right-admin.svg" alt="" /></button>
+                                        <button onClick={() => setCurrentPage(Math.ceil(seminarData&& seminarData.length / rowsPerPage))} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-double-right.svg" alt="" /></button>
                                     </div>
                                 </div> 
                             </div>

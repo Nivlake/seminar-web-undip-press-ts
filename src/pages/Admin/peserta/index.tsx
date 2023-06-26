@@ -66,7 +66,7 @@ export default function Seminar(){
                     <div className="container flex flex-row p-2.5 gap-5">
                         <div className="w-full flex flex-col gap-[1.875rem]">
                             {/* Card */}
-                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-300 rounded-lg justify-between">
+                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-200 rounded-lg justify-between">
                                 <div className="w-full flex justify-between">
                                     <h2 className="font-bold text-xl">Upcoming Seminar</h2>
                                     <Link href="/Admin/peserta/upcoming"><button type="button" className="font-bold text-medium underline underline-offset-1">see all</button></Link>
@@ -87,7 +87,7 @@ export default function Seminar(){
                                 </div>
                                 ))}
                             </div>
-                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-300 rounded-lg justify-between">
+                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-200 rounded-lg justify-between">
                                 <div className="w-full flex justify-between">
                                     <h2 className="font-bold text-xl">Past Seminar</h2>
                                     <Link href="/Admin/peserta/past"><button type="button" className="font-bold text-medium underline underline-offset-1">see all</button></Link>
