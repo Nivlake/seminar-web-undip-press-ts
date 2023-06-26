@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar_2 from "components/Sidebar_2";
 import Sertifikat from "components/Sertifikat";
+import Link from "next/link";
 
 interface SeminarData {
   seminarname: string;
@@ -22,6 +23,7 @@ export default function ListSertifikat() {
       })
       .then((response) => {
         setSertifikat(response.data.seminardata);
+        console.log(response.data.seminardata);
       })
       .catch((error) => {
         console.log(error);
@@ -70,17 +72,21 @@ export default function ListSertifikat() {
           </div>
 
           {/* Sertifikat */}
-          {filteredSertifikat.map((data, index) => (
-            <Sertifikat
-              key={index}
-              data={{
-                seminarname: data.seminarname,
-                seminardate: data.seminardate,
-                seminarspeaker: data.seminarspeaker,
-                kode_sertifikat: data.kode_sertifikat,
-              }}
-            />
-          ))}
+          <div className="grid grid-rows-1 gap-4">
+            {filteredSertifikat.map((data, index) => (
+              <Link href={`/User/detail_sertifikat/${data.id_seminar}`}>
+                <Sertifikat
+                  key={index}
+                  data={{
+                    seminarname: data.seminarname,
+                    seminardate: data.seminardate,
+                    seminarspeaker: data.seminarspeaker,
+                    kode_sertifikat: data.kode_sertifikat,
+                  }}
+                />
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>

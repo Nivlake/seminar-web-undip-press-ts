@@ -1,15 +1,58 @@
-import Link from "next/link";
 import Sidebar_2 from 'components/Sidebar_2'
+import axios from 'axios';
+import { toast } from "react-toastify"
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function User_Dashboard_Home() {
     const [showModal, setShowModal] = useState(false);
     const [rateValue, setRateValue] = useState(0);
     const [isSubmit, setIsSubmit] = useState(false);
+    const [stars, setStars] = useState(0);
+    const [review, setReview] = useState("");
+    const router = useRouter();
+    const pathSegments = router.asPath.split('/');
+    const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
   
     const handleSubmit = () => {
         if (rateValue) {
             setIsSubmit(true);
+            handleSubmitFeedback();
+            setTimeout(() => {
+                setShowModal(false)
+              }, 1000); // 1000 milliseconds = 1 second
+        }
+    };
+
+    const handleSubmitFeedback = async () => {
+        const token = localStorage.getItem('access_token');
+        const data = {
+            id_seminar: id_seminar,
+            stars: stars,
+            review: review
+        }
+        console.log('Sending data:', data);
+        try {
+            axios.post("https://walrus-app-elpr8.ondigitalocean.app/api/ratings/add", data, {
+                headers: {
+                  Authorization: `${token}`,
+                //   'Sec-Fetch-Site': 'cross-site'
+                },
+                // referrerPolicy: 'no-referrer'
+              })
+              .then(response => {
+                // Handle successful response here
+                console.log(response.data);
+                toast.success("Berhasil memberikan feedback");
+              })
+              .catch(error => {
+                // Handle error here
+                console.log(error.response);
+                const errorMessage = JSON.stringify(error.response.data.error);
+                toast.error(`${errorMessage}`);
+              });
+        } catch(error) {
+             // Log the error response
         }
     };
     return (
@@ -75,14 +118,14 @@ export default function User_Dashboard_Home() {
                                                         ? "bg-orange-500  text-white"
                                                         : "text-gray-400 hover:bg-white hover:text-orange-500 bg-zinc-900"
                                                 }`}
-                                                onClick={() => setRateValue(value)}
+                                                onClick={() => { setRateValue(value); setStars(value); }}
                                             >
                                                 {value}
                                             </div>
                                         );
                                     })}
                                 </div>
-                                <input className="focus:border-indigo-500 w-full p-2 rounded-lg border-2 border-gray-200 outline-none text-black" type="text" placeholder="Tuliskan komentar" />
+                                <input className="focus:border-indigo-500 w-full p-2 rounded-lg border-2 border-gray-200 outline-none text-black" type="text" placeholder="Tuliskan komentar" value={review} onChange={(e) => setReview(e.target.value)}  />
                                 <button
                                     className="w-full bg-success-500 rounded-3xl py-3 hover:bg-success-700 transition-all"
                                     onClick={handleSubmit}

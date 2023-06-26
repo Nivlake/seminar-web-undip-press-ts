@@ -11,8 +11,8 @@ export default function Seminar(props: { name: any; short_description: any; spea
                 </div>
             </div>
           </div>
-          <div className="font-bold text-xl mb-2">{props.name}</div>
-          <p className="text-gray-700 line-clamp-3">
+          <div className="font-bold text-xl mb-2 truncate">{props.name}</div>
+          <p className="text-gray-700 line-clamp-3 truncate ">
             {props.short_description}
           </p>
           <div className="flex flex-col">
