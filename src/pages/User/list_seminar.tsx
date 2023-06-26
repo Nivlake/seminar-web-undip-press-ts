@@ -6,10 +6,11 @@ import Link from 'next/link';
 
 export default function list_seminar() {
     const [seminarData, setSeminarData] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
     const selectStyle: React.CSSProperties = {
-        WebkitAppearance: 'none',
-        MozAppearance: 'none',
-      };
+      WebkitAppearance: 'none',
+      MozAppearance: 'none',
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +33,15 @@ export default function list_seminar() {
           // Perform any other operations that depend on seminarData
         }
       }, [seminarData]);
+
+      // Filter the seminarData based on the search query
+      const filteredSeminars = seminarData && seminarData.filter((seminar) => {
+        const name = seminar.name.toLowerCase();
+        const speaker = seminar.speaker.toLowerCase();
+        const query = searchQuery.toLowerCase();
+        return name.includes(query) || speaker.includes(query);
+      });
+
     return (
         <>
             <div className="flex">
@@ -49,7 +59,9 @@ export default function list_seminar() {
                             type="text"
                             className="block px-4 py-2 w-80 text-black-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             placeholder="Search"
-                            style={{ paddingRight: '2rem'}} // Adjust the value as needed
+                            style={{ paddingRight: '2rem'}}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <img
                             src="../icon/search.svg"
@@ -84,7 +96,7 @@ export default function list_seminar() {
                     </div>
                 </div>
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        {seminarData && seminarData.map((seminar) => (
+                        {filteredSeminars && filteredSeminars.map((seminar) => (
                           <Link href={`/User/detail_seminar/${seminar.id}`}>
                             <Seminar
                                 key={seminar.id}
