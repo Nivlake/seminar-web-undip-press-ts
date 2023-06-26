@@ -11,6 +11,21 @@ export default function upcoming(){
     const [showModal, setShowModal] = useState(false);
     const [seminarData, setSeminarData] = useState(null);
 
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+    
+      const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+    
+      const formattedDate = date.toLocaleString('id-ID', options);
+      return formattedDate.replace(' pukul', '');
+    };  
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -106,10 +121,10 @@ export default function upcoming(){
                                     <tbody className="bg-white divide-y divide-gray-200">
                                     {seminarData && currentRows.map((seminar) => (
                                         <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0,50)}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.date_and_time}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.participant_count} Orang</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                            <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0,50)}</td>
+                                            <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
+                                            <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.participant_count} Orang</td>
+                                            <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">
                                             <Link href={`/Admin/peserta/past/detail/${seminar.id}`}>
                                                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                     Details

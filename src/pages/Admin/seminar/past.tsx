@@ -16,15 +16,18 @@ export default function upcoming(){
 
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-      
+    
       const options = {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
       };
-      
-      return date.toLocaleDateString('id-ID', options);
-    };
+    
+      const formattedDate = date.toLocaleString('id-ID', options);
+      return formattedDate.replace(' pukul', '');
+    };  
 
     useEffect(() => {
         const fetchData = async () => {

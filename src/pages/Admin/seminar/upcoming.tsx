@@ -16,15 +16,19 @@ export default function upcoming(){
     const router = useRouter();
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-      
+    
       const options = {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
       };
-      
-      return date.toLocaleDateString('id-ID', options);
-    };
+    
+      const formattedDate = date.toLocaleString('id-ID', options);
+      return formattedDate.replace(' pukul', '');
+    };    
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -218,11 +222,11 @@ export default function upcoming(){
                                 <table className="table-auto w-full">
                                     <thead className="bg-gray-700 text-white">
                                     <tr>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Judul</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Pembicara</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Kategori</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
