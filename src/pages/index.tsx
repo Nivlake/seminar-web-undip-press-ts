@@ -113,12 +113,12 @@ const Home = () => {
         </div>
         <div className="container mx-auto relative">
           {/* Navigation buttons */}
-          <button className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
+          <button className="swiper-button-prev-upcoming absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>          
           </button>
-          <button className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
+          <button className="swiper-button-next-upcoming absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -138,8 +138,8 @@ const Home = () => {
               },
             }}
             pagination={{ clickable: true }}
-            navigation={{ prevEl: '.swiper-button-prev', nextEl: '.swiper-button-next' }}
-          >
+            navigation={{ prevEl: '.swiper-button-prev-upcoming', nextEl: '.swiper-button-next-upcoming' }}
+            >
             {seminarDataUpcoming &&
               seminarDataUpcoming.map((seminar) => (
                 <SwiperSlide key={seminar.id}>
@@ -161,7 +161,7 @@ const Home = () => {
       </div>
 
       {/* Bottom Part */}
-      {/* Upcoming Seminar */}
+      {/* Past Seminar*/}
       <div className="bg-white px-28 py-24 flex flex-col justify-center gap-16">
         <div className="gap-16">
           <h1 className="text-4xl font-semibold flex justify-center">Past Seminar</h1>
@@ -169,12 +169,12 @@ const Home = () => {
         </div>
         <div className="container mx-auto relative">
           {/* Navigation buttons */}
-          <button className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
+          <button className="swiper-button-prev-past absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <button className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
+          <button className="swiper-button-next-past absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -194,8 +194,8 @@ const Home = () => {
               },
             }}
             pagination={{ clickable: true }}
-            navigation={{ prevEl: '.swiper-button-prev', nextEl: '.swiper-button-next' }}
-          >
+            navigation={{ prevEl: '.swiper-button-prev-past', nextEl: '.swiper-button-next-past' }}
+            >
             {seminarDataPast &&
               seminarDataPast.map((seminar) => (
                 <SwiperSlide key={seminar.id}>
