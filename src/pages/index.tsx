@@ -15,8 +15,7 @@ const Home = () => {
   const [user, setUser] = useState(null);
   const [seminarDataUpcoming, setseminarDataUpcoming] = useState(null);
   const [seminarDataPast, setseminarDataPast] = useState(null);
-
-
+        
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     axios
@@ -26,6 +25,9 @@ const Home = () => {
       .then((response) => {
         setUser(response.data);
         console.log(response);
+        localStorage.setItem('user_name', `${response.data.name}`);
+        localStorage.setItem('user_email', `${response.data.email}`);
+
       })
       .catch((error) => {
         console.log(error);
