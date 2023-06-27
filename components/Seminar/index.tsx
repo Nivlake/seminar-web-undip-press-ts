@@ -20,7 +20,7 @@ export default function Seminar(props: { name: any; short_description: any; spea
               {new Date(props.date_and_time).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </div>
             <div className="font-bold text-gray-900">
-                11.00 - 13.00 WIB
+                {/* 11.00 - 13.00 WIB */}
             </div>
            </div>
         </div>
