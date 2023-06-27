@@ -16,7 +16,6 @@ export default function detail_seminar() {
     const [isApplied, setIsApplied] = useState(false);
     const [feedBack, setFeedBack] = useState(null);
 
-
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const appliedSeminars = localStorage.getItem("seminar_applied");
@@ -165,7 +164,6 @@ export default function detail_seminar() {
                 'Authorization': `${token}`
               },
             };
-
             const response = await axios.get(`https://walrus-app-elpr8.ondigitalocean.app/api/user/feedback/${seminar_id}`, config);
             console.log("RESPONSE", response)
             if (response) {
@@ -176,7 +174,6 @@ export default function detail_seminar() {
             console.log(error);
           }
         };
-
         fetchData();
       }, []);
 
@@ -216,11 +213,12 @@ export default function detail_seminar() {
                                         {seminarData && seminarData.speaker}
                                       </div>
                                   </div>
-                              </div>                            </div> 
+                              </div>
+                            </div> 
                         </div>
                         <div className="flex flex-col gap-2.5 p-2.5 text-center space-x-4 w-3/12">
                             <p>&nbsp;&nbsp;Terbuka Hingga:</p>
-                            <p className="font-bold">{formattedDate}</p>                            
+                            <p className="font-bold">{formattedDate}</p>
                             <p>Sisa Kuota:</p>
                             <p className="font-bold">{(seminarData && seminarData.quota) - (seminarData && seminarData.participant_count)}</p>
                         </div>
