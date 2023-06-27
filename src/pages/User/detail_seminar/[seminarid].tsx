@@ -16,8 +16,6 @@ export default function detail_seminar() {
     const [isApplied, setIsApplied] = useState(false);
     const [feedBack, setFeedBack] = useState(null);
 
-
-
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     const appliedSeminars = localStorage.getItem("seminar_applied");
@@ -166,7 +164,6 @@ export default function detail_seminar() {
                 'Authorization': `${token}`
               },
             };
-      
             const response = await axios.get(`https://walrus-app-elpr8.ondigitalocean.app/api/user/feedback/${seminar_id}`, config);
             console.log("RESPONSE", response)
             if (response) {
@@ -177,7 +174,6 @@ export default function detail_seminar() {
             console.log(error);
           }
         };
-      
         fetchData();
       }, []);
 

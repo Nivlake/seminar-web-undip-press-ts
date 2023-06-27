@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import axios from "axios";
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import Link from "next/link";
 
 
@@ -11,17 +12,22 @@ export default function upcoming(){
     const [seminarData, setSeminarData] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
+    const MySwal = withReactContent(Swal);
+
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-      
+    
       const options = {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
       };
-      
-      return date.toLocaleDateString('id-ID', options);
-    };
+    
+      const formattedDate = date.toLocaleString('id-ID', options);
+      return formattedDate.replace(' pukul', '');
+    };  
 
     useEffect(() => {
         const fetchData = async () => {
@@ -104,14 +110,69 @@ export default function upcoming(){
             }
           })
     }
+    
+    const handleFinalize = async (seminarId) => {
+      try {
+        const token = localStorage.getItem('access_token');
+    
+        // Show confirmation dialog
+        const confirmed = await MySwal.fire({
+          title: 'Are you sure?',
+          text: 'Do you want to finalize this seminar?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, finalize it!'
+        });
+    
+        if (confirmed.isConfirmed) {
+          // If confirmed, send the finalize request
+          const response = await axios.post(
+            `https://walrus-app-elpr8.ondigitalocean.app/api/seminars/${seminarId}/finalize`,
+            null,
+            {
+              headers: {
+                Authorization: `${token}`
+              }
+            }
+          );
+    
+          // Handle the response if needed
+          console.log(response.data);
+    
+          // Show success message
+          MySwal.fire({
+            title: 'Finalized!',
+            text: 'The seminar has been finalized.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }
+      } catch (error) {
+        // Handle errors
+        console.error(error);
+    
+        // Show error message
+        MySwal.fire({
+          title: 'Error',
+          text: 'An error occurred while finalizing the seminar.',
+          icon: 'error',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    };
+
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     // Calculate the index range for the current page
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentRows = seminarData&& seminarData.slice(indexOfFirstRow, indexOfLastRow);
+    const currentRows = seminarData && seminarData.slice(indexOfFirstRow, indexOfLastRow);
 
     return(
         <>
@@ -142,15 +203,19 @@ export default function upcoming(){
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Finalisasi</th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                     {seminarData && currentRows.map((seminar) => (
                                       <tr key={seminar.id}>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0,50)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                          <button className="bg-green-500 hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded" onClick={() => handleFinalize(seminar.id)}>Finalize</button>
+                                        </td>
                                       </tr>
                                     ))}
 
@@ -225,23 +290,71 @@ export default function upcoming(){
                                 ) : null}
                             </div>
                             {/* Page */}
-                            <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">
-                                <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
-                                    <div className="flex align-center gap-2.5">
-                                      <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-                                        <img src="/icon/chevron-double-left.svg" alt="" /></button>
-                                      <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><img src="/icon/chevron-left-admin.svg" alt="" /></button>
-                                    </div>
-                                    <div className="flex gap-5">
-                                      {Array(Math.ceil(seminarData&& seminarData.length / rowsPerPage)).fill().map((_, index) => (
-                                        <button key={index} type="button" onClick={() => setCurrentPage(index + 1)}>{index + 1}</button>
-                                      ))}
-                                    </div>
-                                    <div className="flex align-center gap-2.5">
-                                        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-right-admin.svg" alt="" /></button>
-                                        <button onClick={() => setCurrentPage(Math.ceil(seminarData&& seminarData.length / rowsPerPage))} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-double-right.svg" alt="" /></button>
-                                    </div>
-                                </div> 
+                            <div className="flex gap-2.5 mt-2.5 justify-between">
+                              {/* Page select */}
+                              <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium">
+                                <select
+                                  id="pageselect"
+                                  className="bg-danger-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  value={rowsPerPage}
+                                  onChange={(e) => {
+                                    setRowsPerPage(parseInt(e.target.value));
+                                    setCurrentPage(1); // Set currentPage to 1 on select change
+                                  }}
+                                >
+                                  <option value="5">5</option>
+                                  <option value="10">10</option>
+                                  <option value="20">20</option>
+                                  <option value={seminarData ? seminarData.length : 0}>All</option>
+                                </select>
+                              </div>
+
+                              {/* Page Navigation */}
+                              <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
+                                <div className="flex align-center gap-2.5">
+                                  <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                                    <img src="/icon/chevron-double-left.svg" alt="" />
+                                  </button>
+                                  <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                                    <img src="/icon/chevron-left-admin.svg" alt="" />
+                                  </button>
+                                </div>
+                                <div className="flex gap-5">
+                                  {currentPage !== 1 && (
+                                    <>
+                                      <span className="self-end">...</span>
+                                      <button type="button" onClick={() => setCurrentPage(currentPage - 1)}>
+                                        {currentPage - 1}
+                                      </button>
+                                    </>
+                                  )}
+                                  <button type="button" className="w-8 bg-white text-red-500 font-bold rounded-lg">
+                                    {currentPage}
+                                  </button>
+                                  {currentPage !== Math.ceil(seminarData && seminarData.length / rowsPerPage) && (
+                                    <>
+                                      <button type="button" onClick={() => setCurrentPage(currentPage + 1)}>
+                                        {currentPage + 1}
+                                      </button>
+                                      <span className="self-end">...</span>
+                                    </>
+                                  )}
+                                </div>
+                                <div className="flex align-center gap-2.5">
+                                  <button
+                                    onClick={() => setCurrentPage(currentPage + 1)}
+                                    disabled={currentPage === Math.ceil(seminarData && seminarData.length / rowsPerPage)}
+                                  >
+                                    <img src="/icon/chevron-right-admin.svg" alt="" />
+                                  </button>
+                                  <button
+                                    onClick={() => setCurrentPage(Math.ceil(seminarData && seminarData.length / rowsPerPage))}
+                                    disabled={currentPage === Math.ceil(seminarData && seminarData.length / rowsPerPage)}
+                                  >
+                                    <img src="/icon/chevron-double-right.svg" alt="" />
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                         </div>
                     </div>

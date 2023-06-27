@@ -118,7 +118,7 @@ export default function Seminar(){
                                     <div className="flex flex-col border-t-2 border-black">
                                         <div className="flex justify-between">
                                             <div className="flex flex-col">
-                                                <h2 className="font-bold text-base">{seminar.name}</h2>
+                                                <h2 className="font-bold text-base truncate">{seminar.name.slice(0,30)}</h2>
                                                 <h3 className="font-medium text-sm">{seminar.speaker}</h3>
                                             </div>
                                             <div>

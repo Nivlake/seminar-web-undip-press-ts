@@ -11,19 +11,24 @@ export default function upcoming(){
     const [seminarData, setSeminarData] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [selectedSeminar, setSelectedSeminar] = useState(null);
+    
 
     const router = useRouter();
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-      
+    
       const options = {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
       };
-      
-      return date.toLocaleDateString('id-ID', options);
-    };
+    
+      const formattedDate = date.toLocaleString('id-ID', options);
+      return formattedDate.replace(' pukul', '');
+    };    
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -144,12 +149,45 @@ export default function upcoming(){
       
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5;
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
+    // Query
+    const [filteredSeminars, setFilteredSeminars] = useState([]);
+    const [totalRows, setTotalRows] = useState(0);
+    const [searchQuery, setSearchQuery] = useState(''); // Define searchQuery here
+    
+    useEffect(() => {
+      setCurrentPage(1); // Reset to page 1 when searchQuery changes
+    }, [searchQuery]);
+    
+    
     // Calculate the index range for the current page
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentRows = seminarData&& seminarData.slice(indexOfFirstRow, indexOfLastRow);
+    const currentRows = filteredSeminars.slice(indexOfFirstRow, indexOfLastRow);
+      
+    // Filter the seminarData based on the search query
+    useEffect(() => {
+      if (seminarData) {
+          const filteredData = seminarData.filter((seminar) => {
+          const name = seminar.name.toLowerCase();
+          const speaker = seminar.speaker.toLowerCase();
+          const query = searchQuery.toLowerCase();
+          return name.includes(query) || speaker.includes(query);
+        });
+    
+        setFilteredSeminars(filteredData);
+        setTotalRows(filteredData.length);
+    
+        // Reset the current page to 1 if the filtered data is less than or equal to the rows per page
+        if (filteredData.length <= rowsPerPage) {
+          setCurrentPage(1);
+        }
+      }
+    }, [seminarData, searchQuery, rowsPerPage]);
+    
+    
+    
 
     return(
         <>
@@ -161,51 +199,60 @@ export default function upcoming(){
                     <h1 className="text-3xl font-semibold px-2.5">Upcoming Seminar</h1>
                     <div className="p-2.5">
                         <div className="container w-full flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
-                            {/* search bar */}
-                            <div className="flex justify-end">
-                                <div className="mb-3 xl:w-96">
-                                    <div className="input-group relative flex flex-row items-stretch w-full">
-                                        <input type="search" className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-t border-l border-b border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon2"/>
-                                        <button className="btn inline-block px-6 py-2.5 bg-white border-t border-r border-b border-solid border-gray-300 text-white font-medium text-xs leading-tight uppercase rounded-r shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center" type="button" id="button-addon2">
-                                            <img src="/icon/search.svg" alt="" />
-                                        </button>
-                                    </div>
+                            {/* Search Bar */}
+                            <div className="flex flex-row justify-end">
+                                <div className="relative">
+                                    <input
+                                    type="text"
+                                    className="block px-4 py-2 w-80 text-black-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                    placeholder="Search"
+                                    style={{ paddingRight: '2rem'}}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
+                                    <img
+                                    src="/icon/search.svg"
+                                    className="absolute right-3 top-2.5 text-purple-700"
+                                    style={{ pointerEvents: 'none' }}
+                                    alt="Search icon"
+                                    />
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2.5">
                                 <table className="table-auto w-full">
                                     <thead className="bg-gray-700 text-white">
                                     <tr>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Judul</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Pembicara</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Kategori</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Tanggal Penyelenggaraan</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                    {seminarData && currentRows.map((seminar) => (
-                                      <tr key={seminar.id}>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.short_description.slice(0, 20)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                          <div className="flex justify-center gap-7">
-                                          <button onClick={() => {
-                                                setSelectedSeminar(seminar);
-                                                setShowModal(true);
-                                            }}>
-                                            <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                            </button>
-                                            <button>
-                                              <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
-                                            </button>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    ))}
-
+                                    {seminarData&&
+                                      currentRows.map((seminar) => (
+                                          // Rest of the code for rendering each seminar
+                                          <tr key={seminar.id}>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0, 50)}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                              <div className="flex justify-center gap-7">
+                                                <button onClick={() => {
+                                                  setSelectedSeminar(seminar);
+                                                  setShowModal(true);
+                                                }}>
+                                                  <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
+                                                </button>
+                                                <button>
+                                                  <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
+                                                </button>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        ))}
                                     </tbody>
                                 </table>                
                                 {/* Modal */}
@@ -232,12 +279,12 @@ export default function upcoming(){
                                         <h2 className="text-2xl font-bold mb-4">Edit Seminar</h2>
                                         {/* content */}
                                         <form action="" className="flex flex-col px-2.5 gap-5">
-                                        <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">
+                                        {/* <div className="flex w-[14.5rem] h-[14.5rem] bg-neutral-500 justify-center items-center">
                                             <h3 className="text-white">Insert Image Here</h3>
                                         </div>
                                         <div className="flex w-[44.188rem] h-[12.438rem] bg-neutral-500 justify-center items-center">
                                             <h3 className="text-white">Insert Image Here</h3>
-                                        </div>
+                                        </div> */}
                                         <div className="flex flex-col gap-4">
                                             <div className="flex h-11 gap-8 items-center">
                                             <h3 className="w-[8.875rem]">Nama Seminar</h3>
@@ -369,24 +416,73 @@ export default function upcoming(){
                                 ) : null}
                             </div>
                             {/* Page */}
-                            <div className="flex w-fit gap-2.5 mt-2.5 ml-auto">
-                                <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
-                                    <div className="flex align-center gap-2.5">
-                                      <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-                                        <img src="/icon/chevron-double-left.svg" alt="" /></button>
-                                      <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}><img src="/icon/chevron-left-admin.svg" alt="" /></button>
-                                    </div>
-                                    <div className="flex gap-5">
-                                      {Array(Math.ceil(seminarData&& seminarData.length / rowsPerPage)).fill().map((_, index) => (
-                                        <button key={index} type="button" onClick={() => setCurrentPage(index + 1)}>{index + 1}</button>
-                                      ))}
-                                    </div>
-                                    <div className="flex align-center gap-2.5">
-                                        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-right-admin.svg" alt="" /></button>
-                                        <button onClick={() => setCurrentPage(Math.ceil(seminarData&& seminarData.length / rowsPerPage))} disabled={currentPage === Math.ceil(seminarData&& seminarData.length / rowsPerPage)}><img src="/icon/chevron-double-right.svg" alt="" /></button>
-                                    </div>
-                                </div> 
+                            <div className="flex gap-2.5 mt-2.5 justify-between">
+                              {/* Page select */}
+                              <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium">
+                                <select
+                                  id="pageselect"
+                                  className="bg-danger-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  value={rowsPerPage}
+                                  onChange={(e) => {
+                                    setRowsPerPage(parseInt(e.target.value));
+                                    setCurrentPage(1); // Set currentPage to 1 on select change
+                                  }}
+                                >
+                                  <option value="5">5</option>
+                                  <option value="10">10</option>
+                                  <option value="20">20</option>
+                                  <option value={seminarData ? seminarData.length : 0}>All</option>
+                                </select>
+                              </div>
+
+                              {/* Page Navigation */}
+                              <div className="flex p-2.5 gap-2.5 bg-danger-700 rounded-lg text-base font-medium text-white">
+                                <div className="flex align-center gap-2.5">
+                                  <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
+                                    <img src="/icon/chevron-double-left.svg" alt="" />
+                                  </button>
+                                  <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                                    <img src="/icon/chevron-left-admin.svg" alt="" />
+                                  </button>
+                                </div>
+                                <div className="flex gap-5">
+                                  {currentPage !== 1 && (
+                                    <>
+                                      <span className="self-end">...</span>
+                                      <button type="button" onClick={() => setCurrentPage(currentPage - 1)}>
+                                        {currentPage - 1}
+                                      </button>
+                                    </>
+                                  )}
+                                  <button type="button" className="w-8 bg-white text-red-500 font-bold rounded-lg">
+                                    {currentPage}
+                                  </button>
+                                  {currentPage !== Math.ceil(seminarData && seminarData.length / rowsPerPage) && (
+                                    <>
+                                      <button type="button" onClick={() => setCurrentPage(currentPage + 1)}>
+                                        {currentPage + 1}
+                                      </button>
+                                      <span className="self-end">...</span>
+                                    </>
+                                  )}
+                                </div>
+                                <div className="flex align-center gap-2.5">
+                                  <button
+                                    onClick={() => setCurrentPage(currentPage + 1)}
+                                    disabled={currentPage === Math.ceil(seminarData && seminarData.length / rowsPerPage)}
+                                  >
+                                    <img src="/icon/chevron-right-admin.svg" alt="" />
+                                  </button>
+                                  <button
+                                    onClick={() => setCurrentPage(Math.ceil(seminarData && seminarData.length / rowsPerPage))}
+                                    disabled={currentPage === Math.ceil(seminarData && seminarData.length / rowsPerPage)}
+                                  >
+                                    <img src="/icon/chevron-double-right.svg" alt="" />
+                                  </button>
+                                </div>
+                              </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

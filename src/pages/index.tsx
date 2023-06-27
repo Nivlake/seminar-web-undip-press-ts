@@ -15,8 +15,7 @@ const Home = () => {
   const [user, setUser] = useState(null);
   const [seminarDataUpcoming, setseminarDataUpcoming] = useState(null);
   const [seminarDataPast, setseminarDataPast] = useState(null);
-
-
+        
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     axios
@@ -28,6 +27,7 @@ const Home = () => {
         console.log(response);
         localStorage.setItem('user_name', `${response.data.name}`);
         localStorage.setItem('user_email', `${response.data.email}`);
+
       })
       .catch((error) => {
         console.log(error);
@@ -113,7 +113,7 @@ const Home = () => {
           <h1 className="text-4xl font-semibold flex justify-center">Upcoming Seminar</h1>
           <h2 className="flex justify-center mt-7 text-lg font-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</h2>
         </div>
-        <div className="container mx-auto relative">
+        <div className="container mx-auto relative h-full">
           {/* Navigation buttons */}
           <button className="swiper-button-prev-upcoming absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-10">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
@@ -141,22 +141,24 @@ const Home = () => {
             }}
             pagination={{ clickable: true }}
             navigation={{ prevEl: '.swiper-button-prev-upcoming', nextEl: '.swiper-button-next-upcoming' }}
+            
             >
             {seminarDataUpcoming &&
               seminarDataUpcoming.map((seminar) => (
                 <SwiperSlide key={seminar.id}>
-                  <div className="max-w-xs bg-white border border-transparent rounded-lg shadow">
+                  <div className="bg-white border border-transparent rounded-lg shadow overflow-hidden flex flex-col justify-between">
                     <a href="#">
-                      <img className="rounded-t-lg h-64 object-cover" src="/homecard.svg" alt="" />
+                      <img className="rounded-t-lg object-cover" src="/homecard.svg" alt="" />
                     </a>
-                    <div className="p-5">
+                    <div className="flex-grow p-5">
                       <a href="#">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-black">{seminar.name}</h5>
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-black truncate">{seminar.name}</h5>
                       </a>
                       <p className="mb-3 font-normal text-black truncate">{seminar.short_description}.</p>
                     </div>
                   </div>
                 </SwiperSlide>
+
               ))}
           </Swiper>
         </div>
@@ -201,13 +203,13 @@ const Home = () => {
             {seminarDataPast &&
               seminarDataPast.map((seminar) => (
                 <SwiperSlide key={seminar.id}>
-                  <div className="max-w-xs bg-white border border-transparent rounded-lg shadow">
+                  <div className="bg-white border border-transparent rounded-lg shadow">
                     <a href="#">
-                      <img className="rounded-t-lg h-64 object-cover" src="/homecard.svg" alt="" />
+                      <img className="rounded-t-lg object-cover" src="/homecard.svg" alt="" />
                     </a>
                     <div className="p-5">
                       <a href="#">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-black">{seminar.name}</h5>
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-black truncate">{seminar.name}</h5>
                       </a>
                       <p className="mb-3 font-normal text-black truncate">{seminar.short_description}.</p>
                     </div>
