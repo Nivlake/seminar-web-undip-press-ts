@@ -8,7 +8,7 @@ interface SeminarData {
   seminarname: string;
   seminardate: string;
   seminarspeaker: string;
-  kode_sertifikat: string;
+  // kode_sertifikat: string;
 }
 
 export default function ListSertifikat() {
@@ -18,7 +18,7 @@ export default function ListSertifikat() {
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     axios
-      .get("https://walrus-app-elpr8.ondigitalocean.app/api/user/sertifikat", {
+      .get("http://localhost:8000/api/user/sertifikat", {
         headers: { Authorization: `${token}` },
       })
       .then((response) => {
@@ -81,7 +81,7 @@ export default function ListSertifikat() {
                     seminarname: data.seminarname,
                     seminardate: data.seminardate,
                     seminarspeaker: data.seminarspeaker,
-                    kode_sertifikat: data.kode_sertifikat,
+                    // kode_sertifikat: data.kode_sertifikat,
                   }}
                 />
               </Link>

@@ -3,6 +3,16 @@ import axios from 'axios';
 import { toast } from "react-toastify"
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Sertifikat2 from 'components/Sertifikat2';
+
+
+interface SertifikatData {
+    name: string;
+    seminarname: string;
+    seminardate: string;
+    kode_sertifikat: string;
+}
 
 export default function User_Dashboard_Home() {
     const [showModal, setShowModal] = useState(false);
@@ -10,10 +20,87 @@ export default function User_Dashboard_Home() {
     const [isSubmit, setIsSubmit] = useState(false);
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState("");
+    const [isGenerated, setIsGenerated] = useState(false);
     const router = useRouter();
     const pathSegments = router.asPath.split('/');
     const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
-  
+    const [kode_sertifikat, setKodeSertifikat] = useState("");
+    const [datasertifikat, setDatasertifikat] = useState<SertifikatData>();
+    const [data, setData] = useState<SertifikatData>();
+
+    useEffect(() => {
+        const pathSegments = router.asPath.split('/');
+        const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
+        const token = localStorage.getItem('access_token');
+        axios.post('http://127.0.0.1:8000/api/user/isgenerated', {
+            id_seminar: id_seminar
+        }, {
+            headers: {
+              Authorization: `${token}`,
+                                // 'Sec-Fetch-Site': 'cross-site'
+                            },
+                            // referrerPolicy: 'no-referrer'
+          })
+          .then(response => {
+            // Handle successful response here
+            console.log(response.data);
+            setIsGenerated(true);
+            setDatasertifikat(response.data);
+          })
+          .catch(error => {
+            // Handle error here
+            console.log(error.response);
+            setIsGenerated(false);
+          });
+    }, []);
+    const toggleGenerate = async () => {
+        const pathSegments = router.asPath.split('/');
+        const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
+        const token = localStorage.getItem('access_token');
+        axios.post(`http://127.0.0.1:8000/api/sertifikat/generate/${id_seminar}`, {}, {
+            headers: {
+              Authorization: `${token}`},
+            //   'Sec-Fetch-Site': 'cross-site'
+            })
+            // referrerPolicy: 'no-referrer'
+            .then(response => { 
+                console.log(response.data);
+                setKodeSertifikat(response.data.kode_sertifikat);
+                setIsGenerated(true);
+                toast.success("Berhasil generate sertifikat");
+            })
+            .catch(error => {
+                console.log(error.response);
+                const errorMessage = JSON.stringify(error.response.data.error);
+                toast.error(`${errorMessage}`);
+            });
+    };
+    const handledownload = async () => {
+        const pathSegments = router.asPath.split('/');
+        const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
+        const token = localStorage.getItem('access_token');
+        axios.post('http://127.0.0.1:8000/api/user/isgenerated', {
+            id_seminar: id_seminar
+        }, {
+            headers: {
+              Authorization: `${token}`,
+                                // 'Sec-Fetch-Site': 'cross-site'
+                            },
+                            // referrerPolicy: 'no-referrer'
+          })
+            .then(response => {
+                console.log(response.data);
+                setDatasertifikat(response.data);
+                setIsGenerated(true);
+                toast.success("Berhasil download sertifikat");
+            })
+            .catch(error => {
+                console.log(error.response);
+                setIsGenerated(false);
+                const errorMessage = JSON.stringify(error.response.data.error);
+                toast.error(`${errorMessage}`);
+            });
+    };
     const handleSubmit = () => {
         if (rateValue) {
             setIsSubmit(true);
@@ -72,7 +159,18 @@ export default function User_Dashboard_Home() {
                                 Selamat atas keberhasilan Anda dalam mendapatkan sertifikat seminar ini ! Teruslah mengejar impian dan mengembangkan diri melalui peluang-peluang seperti ini.
                             </p>
                             <div className="flex flex row space-x-4">
-                                <button className="bg-primary-500 hover:bg-primary-700 duration-300 w-36 rounded-lg px-4 py-2 text-white">Download</button>
+                            <button className={isGenerated ? "bg-primary-500 hover:bg-primary-700 duration-300 w-36 rounded-lg px-4 py-2 text-white" : "bg-orange-500 hover:bg-orange-700 duration-300 w-36 rounded-lg px-4 py-2 text-white"}
+                                onClick={() => {
+                                            if (!isGenerated) {
+                                                toggleGenerate();
+                                            }
+                                            else {
+                                                handledownload();
+                                            }
+                                        }}
+                                >
+                                {isGenerated ? "Show" : "Generate"}
+                            </button>
                                 <button 
                                 className="bg-primary-500 hover:bg-primary-700 duration-300 w-36 rounded-lg px-4 py-2 text-white"
                                 onClick={() => setShowModal(true)}
@@ -82,10 +180,20 @@ export default function User_Dashboard_Home() {
                             </div>
                         </div>
                     </div>
-                    {/* Judul */}
+                    {/* Judul */}                
+                    
                     <div className="w-full bg-neutral-500">
-                        <p className="font-bold text-white text-center py-[5.2rem]">Sertifikat</p>
-                    </div>
+  {datasertifikat ? (
+    <Sertifikat2
+      data={{
+        nama: datasertifikat.data.nama,
+        seminarname: datasertifikat.data.seminarname,
+        seminardate: datasertifikat.data.seminardate,
+        kode_sertifikat: datasertifikat.data.kode_sertifikat,
+      }}
+    />
+  ) : null}
+</div>
                 </div>
                     {showModal ? (
                         <div className="justify-center items-center backdrop-blur flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
