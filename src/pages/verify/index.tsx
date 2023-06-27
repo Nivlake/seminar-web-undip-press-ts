@@ -11,7 +11,7 @@ export default function Verify() {
         setData(null);
         event.preventDefault();
         try {
-          const response = await axios.post('http://127.0.0.1:8000/api/sertifikat/show', {
+          const response = await axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/sertifikat/show', {
             kode_sertifikat: kode_sertifikat,
           });
           if (response) {

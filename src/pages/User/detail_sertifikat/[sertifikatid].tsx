@@ -32,7 +32,7 @@ export default function User_Dashboard_Home() {
         const pathSegments = router.asPath.split('/');
         const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
         const token = localStorage.getItem('access_token');
-        axios.post('http://127.0.0.1:8000/api/user/isgenerated', {
+        axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/user/isgenerated', {
             id_seminar: id_seminar
         }, {
             headers: {
@@ -57,7 +57,7 @@ export default function User_Dashboard_Home() {
         const pathSegments = router.asPath.split('/');
         const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
         const token = localStorage.getItem('access_token');
-        axios.post(`http://127.0.0.1:8000/api/sertifikat/generate/${id_seminar}`, {}, {
+        axios.post(`https://walrus-app-elpr8.ondigitalocean.app/api/sertifikat/generate/${id_seminar}`, {}, {
             headers: {
               Authorization: `${token}`},
             //   'Sec-Fetch-Site': 'cross-site'
@@ -79,7 +79,7 @@ export default function User_Dashboard_Home() {
         const pathSegments = router.asPath.split('/');
         const id_seminar = parseInt(pathSegments[pathSegments.length - 1]);
         const token = localStorage.getItem('access_token');
-        axios.post('http://127.0.0.1:8000/api/user/isgenerated', {
+        axios.post('https://walrus-app-elpr8.ondigitalocean.app/api/user/isgenerated', {
             id_seminar: id_seminar
         }, {
             headers: {

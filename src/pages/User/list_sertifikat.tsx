@@ -18,7 +18,7 @@ export default function ListSertifikat() {
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     axios
-      .get("http://localhost:8000/api/user/sertifikat", {
+      .get("https://walrus-app-elpr8.ondigitalocean.app/api/user/sertifikat", {
         headers: { Authorization: `${token}` },
       })
       .then((response) => {
