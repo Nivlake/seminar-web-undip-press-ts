@@ -20,7 +20,7 @@ const Sertifikat2 = ({data}) => {
         const name = data.nama;
         const number = data.kode_sertifikat;
         const namaseminar = 'Pada Kegiatan Seminar Dengan Judul ' + data.seminarname;
-        const tanggal = 'yang diselenggarakan oleh paghuyuban coli pada tanggal ' + data.seminardate;
+        const tanggal = 'yang diselenggarakan pada tanggal ' + data.seminardate;
 
         const fontSize = name.length > 20 ? name.length / 1.1 : 38;
         const fontnamaseminar = 15;

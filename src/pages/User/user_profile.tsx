@@ -50,6 +50,8 @@ export default function User_Profile() {
 
       const handleUpdate = async (data: IFormInput) => {
         try {
+            localStorage.setItem('user_name', `${data.name}`);
+            localStorage.setItem('user_email', `${data.email}`);
             axios.put("https://walrus-app-elpr8.ondigitalocean.app/api/user/editprofile", data, {
                 headers: {
                   Authorization: `${token}`,

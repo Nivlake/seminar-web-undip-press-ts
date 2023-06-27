@@ -4,6 +4,7 @@ import Komentar from 'components/Komentar'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 export default function detail_seminar() {
     const router = useRouter();
@@ -13,8 +14,7 @@ export default function detail_seminar() {
     const [user, setUser] = useState(null);
     const [appliedSeminars, setAppliedSeminars] = useState(null);
     const [isApplied, setIsApplied] = useState(false);
-
-
+    const [feedBack, setFeedBack] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -147,6 +147,40 @@ export default function detail_seminar() {
       
         fetchData();
       }, []);
+
+      useEffect(() => {
+        const fetchData = async () => {
+          const segments = window.location.href.split('/');
+          if (localStorage.getItem('seminar_id') === 'undefined' || localStorage.getItem('seminar_id') !== segments[segments.length - 1]) {
+            const seminar_id = segments[segments.length - 1];
+            localStorage.setItem('seminar_id', seminar_id);
+          }
+          try {
+            const token = localStorage.getItem('access_token');
+            const seminar_id = localStorage.getItem('seminar_id');
+            const config = {
+              headers: {
+                // Add your desired headers here
+                'Authorization': `${token}`
+              },
+            };
+            const response = await axios.get(`https://walrus-app-elpr8.ondigitalocean.app/api/user/feedback/${seminar_id}`, config);
+            console.log("RESPONSE", response)
+            if (response) {
+              setFeedBack(response.data.seminar);
+            //   console.log(response.data.applicants) // Assuming the actual data is stored in response.data
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchData();
+      }, []);
+
+      const dateString = seminarData && seminarData.date_and_time;
+      const dateObj = new Date(dateString);
+      const formattedDate = dateObj.toLocaleDateString("en-US", {month: "2-digit", day: "2-digit", year: "numeric"});
+      console.log("date", formattedDate);
       
       
       useEffect(() => {
@@ -171,12 +205,20 @@ export default function detail_seminar() {
                                     <h3 className="w-fit px-2.5 rounded-lg border border-black border-2">{seminarData && seminarData.category}</h3>
                                 </div>
                                 <h1 className="text-5xl font-bold tracking-tight text-black">{seminarData && seminarData.name}</h1>
-                                <h2 className="">Penyelenggara Seminar</h2>
+                                <h2 className="">Pembawa Seminar</h2>
+                                <div className="flex flex-row space-x-2">
+                                <img src="../../icon/narasumber.svg" />
+                                  <div className="text-neutral-900 flex flex-row">
+                                      <div>
+                                        {seminarData && seminarData.speaker}
+                                      </div>
+                                  </div>
+                              </div>
                             </div> 
                         </div>
                         <div className="flex flex-col gap-2.5 p-2.5 text-center space-x-4 w-3/12">
                             <p>&nbsp;&nbsp;Terbuka Hingga:</p>
-                            <p className="font-bold">12/02/2023</p>
+                            <p className="font-bold">{formattedDate}</p>
                             <p>Sisa Kuota:</p>
                             <p className="font-bold">{(seminarData && seminarData.quota) - (seminarData && seminarData.participant_count)}</p>
                         </div>
@@ -185,9 +227,9 @@ export default function detail_seminar() {
                 <div className="flex flex-row justify-between leading-normal w-10/12">
                     <div className="p-4 space-y-4 w-8/12">
                         <h1 className="text-2xl font-bold">Deskripsi</h1>
-                        <div className="w-full bg-neutral-500">
+                        {/* <div className="w-full bg-neutral-500">
                             <p className="font-bold text-white text-center py-[5.2rem]">Image Place In Here</p>
-                        </div>
+                        </div> */}
                         <p className="text-justify">
                             {seminarData && seminarData.full_description}
                         </p>
@@ -210,26 +252,28 @@ export default function detail_seminar() {
                           </button>
                         )}
                         <h1 className="text-2xl font-bold">Jadwal Pelaksanaan</h1>
-                        <p>Mulai : 05 Januari 2023 11.00</p>
-                        <p>Selesai : 05 Januari 2023 13.00</p>
+                        <p>Mulai : {new Date(seminarData && seminarData.date_and_time).toLocaleDateString("id-ID", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        {/* <p>Selesai : 05 Januari 2023 13.00</p> */}
                         <h1 className="text-2xl font-bold">Lokasi</h1>
                         <div className="flex flex-row gap-4">
                             <img src="../../icon/location.svg"/>
                             <div className="flex flex-col">
-                                <p>UPT Perpustakaan</p>
-                                <p>dan Undip Press, Semarang</p>
+                                <p>{seminarData && seminarData.lokasi}</p>
+                                <p>{seminarData && seminarData.alamat}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="p-4">
-                    <h1 className="text-2xl font-bold">Feedback</h1>
+                    {/* <h1 className="text-2xl font-bold">Feedback</h1> */}
                     {/* Komentar */}
-                    <Komentar/>
-                    {/* Komentar */}
-                    <Komentar/>
-                    {/* Komentar */}
-                    <Komentar/>
+                    {feedBack && feedBack.map((data) => (
+                      <Komentar
+                        user={data.user.name}
+                        stars={data.stars}
+                        comment={data.feedBack}
+                      />
+                    ))}
                 </div>
             </div>
         </div>
