@@ -169,10 +169,51 @@ export default function upcoming(){
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
+    // Query
+    const [filteredSeminars, setFilteredSeminars] = useState([]);
+    const [totalRows, setTotalRows] = useState(0);
+    const [searchQuery, setSearchQuery] = useState(''); // Define searchQuery here
+    
+    useEffect(() => {
+      setCurrentPage(1); // Reset to page 1 when searchQuery changes
+    }, [searchQuery]);
+    
+    
     // Calculate the index range for the current page
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentRows = seminarData && seminarData.slice(indexOfFirstRow, indexOfLastRow);
+    const currentRows = filteredSeminars.slice(indexOfFirstRow, indexOfLastRow);
+      
+    const [sortingOption, setSortingOption] = useState('name'); // Default value is 'name'
+
+    useEffect(() => {
+      if (seminarData) {
+        const filteredData = seminarData.filter((seminar) => {
+          const name = seminar.name.toLowerCase();
+          const speaker = seminar.speaker.toLowerCase();
+          const query = searchQuery.toLowerCase();
+          return name.includes(query) || speaker.includes(query);
+        });
+
+        // Sort the filteredData based on the selected sorting option
+        const sortedData = [...filteredData].sort((a, b) => {
+          if (sortingOption === 'name') {
+            return a.name.localeCompare(b.name);
+          } else if (sortingOption === 'date') {
+            return new Date(a.date_and_time) - new Date(b.date_and_time);
+          }
+          return 0;
+        });
+
+        setFilteredSeminars(sortedData);
+        setTotalRows(sortedData.length);
+
+        // Reset the current page to 1 if the sorted data is less than or equal to the rows per page
+        if (sortedData.length <= rowsPerPage) {
+          setCurrentPage(1);
+        }
+      }
+    }, [seminarData, searchQuery, sortingOption, rowsPerPage]);
 
     return(
         <>
@@ -183,22 +224,41 @@ export default function upcoming(){
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
                     <h1 className="text-3xl font-semibold px-2.5">Past Seminar</h1>
                     <div className="p-2.5">
-                        <div className="container w-full flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
+                        <div className="container w-full flex flex-col bg-primary-500 rounded-lg p-5 gap-2.5">
                             {/* search bar */}
-                            <div className="flex justify-end">
-                                <div className="mb-3 xl:w-96">
-                                    <div className="input-group relative flex flex-row items-stretch w-full">
-                                        <input type="search" className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-t border-l border-b border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon2"/>
-                                        <button className="btn inline-block px-6 py-2.5 bg-white border-t border-r border-b border-solid border-gray-300 text-white font-medium text-xs leading-tight uppercase rounded-r shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center" type="button" id="button-addon2">
-                                            <img src="/icon/search.svg" alt="" />
-                                        </button>
-                                    </div>
+                            <div className="flex flex-row justify-end">
+                                <div className="relative">
+                                    <input
+                                    type="text"
+                                    className="block px-4 py-2 w-80 text-black-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                    placeholder="Search"
+                                    style={{ paddingRight: '2rem'}}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
+                                    <img
+                                    src="/icon/search.svg"
+                                    className="absolute right-3 top-2.5 text-purple-700"
+                                    style={{ pointerEvents: 'none' }}
+                                    alt="Search icon"
+                                    />
                                 </div>
+                            </div>
+                            <div className="flex flex-row justify-end">
+                              <select
+                                value={sortingOption}
+                                onChange={(e) => setSortingOption(e.target.value)}
+                                className="bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                              >
+                                <option value="name">Sort by Name</option>
+                                <option value="date">Sort by Date</option>
+                              </select>
                             </div>
                             <div className="flex flex-col gap-2.5">
                                 <table className="table-auto w-full">
                                     <thead className="bg-gray-700 text-white">
                                     <tr>
+                                        <th className="px-6 py-3 text-left uppercase tracking-wider text-center">No</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
                                         <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
@@ -207,8 +267,14 @@ export default function upcoming(){
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                    {seminarData && currentRows.map((seminar) => (
+                                    {seminarData &&
+                                      currentRows.map((seminar, index) => {
+                                    // Calculate the actual index based on the current page and number of items per page
+                                    const actualIndex = (currentPage - 1) * rowsPerPage + index + 1;
+                                    
+                                    return (
                                       <tr key={seminar.id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{actualIndex}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0,50)}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
@@ -217,7 +283,8 @@ export default function upcoming(){
                                           <button className="bg-green-500 hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded" onClick={() => handleFinalize(seminar.id)}>Finalize</button>
                                         </td>
                                       </tr>
-                                    ))}
+                                      );
+                                    })}
 
                                     </tbody>
                                 </table>                

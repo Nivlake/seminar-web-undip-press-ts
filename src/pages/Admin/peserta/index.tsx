@@ -66,43 +66,43 @@ export default function Seminar(){
                     <div className="container flex flex-row p-2.5 gap-5">
                         <div className="w-full flex flex-col gap-[1.875rem]">
                             {/* Card */}
-                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-200 rounded-lg justify-between">
+                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-500 rounded-lg justify-between">
                                 <div className="w-full flex justify-between">
-                                    <h2 className="font-bold text-xl">Upcoming Seminar</h2>
-                                    <Link href="/Admin/peserta/upcoming"><button type="button" className="font-bold text-medium underline underline-offset-1">see all</button></Link>
+                                    <h2 className="font-bold text-xl text-white">Upcoming Seminar</h2>
+                                    <Link href="/Admin/peserta/upcoming"><button type="button" className="font-bold text-medium underline underline-offset-1 text-white">see all</button></Link>
                                 </div>
                                 {/* Bagian Bawah */}
                                 {seminarDataUpcoming && seminarDataUpcoming.slice(0, 4).map((seminarUpcoming) => (
-                                <div className="flex flex-col border-t-2 border-black">
+                                <div className="flex flex-col border-t-2 border-white">
                                     <div className="flex justify-between">
                                     <div className="flex flex-col">
-                                        <h2 className="font-bold text-base">{seminarUpcoming.name}</h2>
-                                        <h3 className="font-medium text-sm">{seminarUpcoming.speaker}</h3>
+                                        <h2 className="font-bold text-base text-white">{seminarUpcoming.name}</h2>
+                                        <h3 className="font-medium text-sm text-white">{seminarUpcoming.speaker}</h3>
                                     </div>
                                     <div>
-                                        <h2 className="font-bold text-base">Total Pendaftar</h2>
-                                        <h3 className="font-medium text-sm text-right">{seminarUpcoming.participant_count} Orang</h3>
+                                        <h2 className="font-bold text-base text-white">Total Pendaftar</h2>
+                                        <h3 className="font-medium text-sm text-white text-right">{seminarUpcoming.participant_count} Orang</h3>
                                     </div>
                                     </div>
                                 </div>
                                 ))}
                             </div>
-                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-200 rounded-lg justify-between">
+                            <div className="w-full flex flex-col p-5 gap-2.5 bg-primary-500 rounded-lg justify-between">
                                 <div className="w-full flex justify-between">
-                                    <h2 className="font-bold text-xl">Past Seminar</h2>
-                                    <Link href="/Admin/peserta/past"><button type="button" className="font-bold text-medium underline underline-offset-1">see all</button></Link>
+                                    <h2 className="font-bold text-xl text-white">Past Seminar</h2>
+                                    <Link href="/Admin/peserta/past"><button type="button" className="font-bold text-medium underline underline-offset-1 text-white">see all</button></Link>
                                 </div>
                                 {/* Bagian Bawah */}
                                 {seminarDataPast && seminarDataPast.slice(0, 4).map((seminarPast) => (
-                                    <div className="flex flex-col border-t-2 border-black">
+                                    <div className="flex flex-col border-t-2 border-white">
                                     <div className="flex justify-between">
                                         <div className="flex flex-col">
-                                            <h2 className="font-bold text-base">{seminarPast.name.slice(0,30)}</h2>
-                                            <h3 className="font-medium text-sm">{seminarPast.speaker}</h3>
+                                            <h2 className="font-bold text-base text-white">{seminarPast.name.slice(0,30)}</h2>
+                                            <h3 className="font-medium text-sm text-white">{seminarPast.speaker}</h3>
                                         </div>
                                         <div>
-                                            <h2 className="font-bold text-base">Total Hadir</h2>
-                                            <h3 className="font-medium text-sm text-right">{seminarPast.participant_count} Orang</h3>
+                                            <h2 className="font-bold text-base text-white">Total Hadir</h2>
+                                            <h3 className="font-medium text-sm text-white text-right">{seminarPast.participant_count} Orang</h3>
                                         </div>
                                     </div>
                                 </div>

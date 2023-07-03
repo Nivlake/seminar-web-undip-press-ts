@@ -136,7 +136,9 @@ export default function upcoming(){
             // Handle the response as needed
             console.log('Seminar updated successfully!', response.data);
       
-            Swal.fire('Saved!', '', 'success');
+            Swal.fire('Saved!', '', 'success').then(()=>{
+              window.location.reload();
+            });
           } else {
             Swal.fire('Changes not saved', '', 'info');
           }
@@ -166,25 +168,36 @@ export default function upcoming(){
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = filteredSeminars.slice(indexOfFirstRow, indexOfLastRow);
       
-    // Filter the seminarData based on the search query
+    const [sortingOption, setSortingOption] = useState('name'); // Default value is 'name'
+
     useEffect(() => {
       if (seminarData) {
-          const filteredData = seminarData.filter((seminar) => {
+        const filteredData = seminarData.filter((seminar) => {
           const name = seminar.name.toLowerCase();
           const speaker = seminar.speaker.toLowerCase();
           const query = searchQuery.toLowerCase();
           return name.includes(query) || speaker.includes(query);
         });
-    
-        setFilteredSeminars(filteredData);
-        setTotalRows(filteredData.length);
-    
-        // Reset the current page to 1 if the filtered data is less than or equal to the rows per page
-        if (filteredData.length <= rowsPerPage) {
+
+        // Sort the filteredData based on the selected sorting option
+        const sortedData = [...filteredData].sort((a, b) => {
+          if (sortingOption === 'name') {
+            return a.name.localeCompare(b.name);
+          } else if (sortingOption === 'date') {
+            return new Date(a.date_and_time) - new Date(b.date_and_time);
+          }
+          return 0;
+        });
+
+        setFilteredSeminars(sortedData);
+        setTotalRows(sortedData.length);
+
+        // Reset the current page to 1 if the sorted data is less than or equal to the rows per page
+        if (sortedData.length <= rowsPerPage) {
           setCurrentPage(1);
         }
       }
-    }, [seminarData, searchQuery, rowsPerPage]);
+    }, [seminarData, searchQuery, sortingOption, rowsPerPage]);
     
     
     
@@ -198,7 +211,7 @@ export default function upcoming(){
                 <div className="w-screen flex flex-col p-8 gap-6 flex-grow">
                     <h1 className="text-3xl font-semibold px-2.5">Upcoming Seminar</h1>
                     <div className="p-2.5">
-                        <div className="container w-full flex flex-col bg-primary-300 rounded-lg p-5 gap-2.5">
+                        <div className="container w-full flex flex-col bg-primary-500 rounded-lg p-5 gap-2.5">
                             {/* Search Bar */}
                             <div className="flex flex-row justify-end">
                                 <div className="relative">
@@ -218,43 +231,61 @@ export default function upcoming(){
                                     />
                                 </div>
                             </div>
+                            <div className="flex flex-row justify-end">
+                              <select
+                                value={sortingOption}
+                                onChange={(e) => setSortingOption(e.target.value)}
+                                className="bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                              >
+                                <option value="name">Sort by Name</option>
+                                <option value="date">Sort by Date</option>
+                              </select>
+                            </div>
                             <div className="flex flex-col gap-2.5">
-                                <table className="table-auto w-full">
-                                    <thead className="bg-gray-700 text-white">
-                                    <tr>
-                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Judul</th>
-                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Pembicara</th>
-                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Kategori</th>
-                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Tanggal Penyelenggaraan</th>
-                                        <th className="px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-center"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
-                                    {seminarData&&
-                                      currentRows.map((seminar) => (
-                                          // Rest of the code for rendering each seminar
-                                          <tr key={seminar.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0, 50)}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                              <div className="flex justify-center gap-7">
-                                                <button onClick={() => {
-                                                  setSelectedSeminar(seminar);
-                                                  setShowModal(true);
-                                                }}>
-                                                  <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
-                                                </button>
-                                                <button>
-                                                  <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
-                                                </button>
-                                              </div>
-                                            </td>
-                                          </tr>
-                                        ))}
-                                    </tbody>
-                                </table>                
+                            <table className="table-auto w-full">
+                              <thead className="bg-gray-700 text-white">
+                                <tr>
+                                  <th className="px-6 py-3 text-left uppercase tracking-wider text-center">No</th>
+                                  <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Judul</th>
+                                  <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Pembicara</th>
+                                  <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Kategori</th>
+                                  <th className="px-6 py-3 text-left uppercase tracking-wider text-center">Tanggal Penyelenggaraan</th>
+                                  <th className="px-6 py-3 text-left uppercase tracking-wider text-center"></th>
+                                </tr>
+                              </thead>
+                              <tbody className="bg-white divide-y divide-gray-200">
+                                {seminarData &&
+                                  currentRows.map((seminar, index) => {
+                                    // Calculate the actual index based on the current page and number of items per page
+                                    const actualIndex = (currentPage - 1) * rowsPerPage + index + 1;
+                                    
+                                    return (
+                                      <tr key={seminar.id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{actualIndex}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.name.slice(0, 50)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.speaker}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{seminar.category.slice(0, 20)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">{formatDate(seminar.date_and_time)}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                          <div className="flex justify-center gap-7">
+                                            <button onClick={() => {
+                                              setSelectedSeminar(seminar);
+                                              setShowModal(true);
+                                            }}>
+                                              <img src="/icon/edit.svg" className="w-[1.875rem]" alt="" />
+                                            </button>
+                                            <button>
+                                              <img src="/icon/delete.svg" className="w-[1.875rem]" alt="" onClick={() => Delete(seminar.id)} />
+                                            </button>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                              </tbody>
+                            </table>
+
+                
                                 {/* Modal */}
                                 {showModal  ? (
                                 <div className="fixed z-10 inset-0">
@@ -401,11 +432,11 @@ export default function upcoming(){
                                         </div>
                                         </form>
                                         <div className="flex flex-row gap-2.5 mt-10">
-                                            <button className="flex flex-row bg-success-600 py-2.5 px-7 rounded-lg"
+                                            <button className="flex flex-row bg-info-600 py-2.5 px-7 rounded-lg text-white"
                                             onClick={Save}>
                                             <h3>Save</h3>
                                             </button>
-                                            <button className="flex flex-row bg-danger-600 py-2.5 px-5 rounded-lg"
+                                            <button className="flex flex-row bg-danger-600 py-2.5 px-5 rounded-lg text-white"
                                             onClick={() => setShowModal(false)}>
                                             <h3>Cancel</h3>
                                             </button>

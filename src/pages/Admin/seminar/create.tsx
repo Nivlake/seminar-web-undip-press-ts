@@ -249,12 +249,12 @@ export default function createSeminar(){
           </form>
           <div className="flex flex-row gap-2.5 mt-7">
             <button 
-            className="flex flex-row bg-success-600 py-2.5 px-7 rounded-lg"
+            className="flex flex-row bg-info-600 py-2.5 px-7 rounded-lg text-white"
             onClick={Save}>
               <h3>Save</h3>
             </button>
             <button 
-            className="flex flex-row bg-danger-600 py-2.5 px-5 rounded-lg"
+            className="flex flex-row bg-danger-600 py-2.5 px-5 rounded-lg text-white"
             onClick={Delete}>
               <h3>Cancel</h3>
             </button>

@@ -97,7 +97,6 @@ export default function upcoming(){
                                 <tr className="bg-gray-700 text-white">
                                     <th className="px-4 py-2">Nama</th>
                                     <th className="px-4 py-2">Identitas</th>
-                                    <th className="px-4 py-2">Kehadiran</th>
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -105,16 +104,6 @@ export default function upcoming(){
                                         <tr key={participant.participant_id}>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{participant.participant_name}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">{participant.participant_phone}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
-                                                <button
-                                                    className={`${
-                                                    attendance[0] ? 'bg-green-500' : 'bg-red-500'
-                                                    } hover:bg-opacity-75 text-white font-bold py-2 px-4 rounded`}
-                                                    onClick={() => handleToggleAttendance(0)}
-                                                >
-                                                    {attendance[0] ? 'Hadir' : 'Tidak Hadir'}
-                                                </button>
-                                            </td>
                                         </tr>
                                     ))}
                                     
